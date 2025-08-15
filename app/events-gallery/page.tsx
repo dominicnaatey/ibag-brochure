@@ -3,12 +3,14 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Calendar, MapPin, Users } from "lucide-react"
 import Link from "next/link"
-import { mockEvents, mockGallery } from "@/lib/mock-data"
+import { eventsService, galleryService } from "@/lib/supabase-service"
 
-export default function EventsGalleryPage() {
-  const upcomingEvents = mockEvents.filter((event) => new Date(event.date) > new Date()).slice(0, 3)
+export default async function EventsGalleryPage() {
+  const allEvents = await eventsService.getAll()
+  const upcomingEvents = allEvents.filter((event) => new Date(event.event_date) > new Date()).slice(0, 3)
 
-  const pastEventsGallery = mockGallery.slice(0, 6)
+  const pastEventsGallery = await galleryService.getAll()
+  const galleryImages = pastEventsGallery.slice(0, 6)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -47,7 +49,7 @@ export default function EventsGalleryPage() {
                     <div className="flex items-center space-x-3">
                       <Calendar className="h-4 w-4 text-purple-600" />
                       <span className="text-gray-600 text-sm">
-                        {new Date(event.date).toLocaleDateString()} at {event.time}
+                        {new Date(event.event_date).toLocaleDateString()} at {event.event_time}
                       </span>
                     </div>
                     <div className="flex items-center space-x-3">
@@ -87,11 +89,11 @@ export default function EventsGalleryPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {pastEventsGallery.map((galleryItem) => (
+              {galleryImages.map((galleryItem) => (
                 <Link key={galleryItem.id} href={`/gallery/${galleryItem.id}`}>
                   <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
                     <img
-                      src={galleryItem.image || "/placeholder.svg"}
+                      src={galleryItem.image_url || "/placeholder.svg"}
                       alt={galleryItem.title}
                       className="w-full h-48 object-cover"
                     />

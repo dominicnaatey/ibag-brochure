@@ -4,7 +4,7 @@ import { ArrowLeft, Calendar, MapPin, Clock, Users, ExternalLink } from "lucide-
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { mockEvents } from "@/lib/mock-data"
+import { eventsService } from "@/lib/supabase-service"
 
 interface EventDetailPageProps {
   params: {
@@ -12,14 +12,14 @@ interface EventDetailPageProps {
   }
 }
 
-export default function EventDetailPage({ params }: EventDetailPageProps) {
-  const event = mockEvents.find((item) => item.id === Number.parseInt(params.id))
+export default async function EventDetailPage({ params }: EventDetailPageProps) {
+  const event = await eventsService.getById(params.id)
 
   if (!event) {
     notFound()
   }
 
-  const isUpcoming = new Date(event.date) > new Date()
+  const isUpcoming = new Date(event.event_date) > new Date()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
@@ -54,7 +54,7 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
               {/* Event Image */}
               <div className="mb-8">
                 <img
-                  src={event.image || "/placeholder.svg"}
+                  src={event.image_url || "/placeholder.svg"}
                   alt={event.title}
                   className="w-full h-96 object-cover rounded-lg shadow-lg"
                 />
@@ -118,14 +118,14 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
                       <div>
                         <p className="font-medium text-gray-900">Date & Time</p>
                         <p className="text-gray-600">
-                          {new Date(event.date).toLocaleDateString("en-US", {
+                          {new Date(event.event_date).toLocaleDateString("en-US", {
                             weekday: "long",
                             year: "numeric",
                             month: "long",
                             day: "numeric",
                           })}
                         </p>
-                        <p className="text-gray-600">{event.time}</p>
+                        <p className="text-gray-600">{event.event_time}</p>
                       </div>
                     </div>
 

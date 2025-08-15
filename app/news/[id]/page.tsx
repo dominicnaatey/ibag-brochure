@@ -3,7 +3,7 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, User, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { mockNews } from "@/lib/mock-data"
+import { newsService } from "@/lib/supabase-service"
 
 interface NewsDetailPageProps {
   params: {
@@ -11,8 +11,8 @@ interface NewsDetailPageProps {
   }
 }
 
-export default function NewsDetailPage({ params }: NewsDetailPageProps) {
-  const article = mockNews.find((item) => item.id === params.id)
+export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
+  const article = await newsService.getById(params.id)
 
   if (!article) {
     notFound()
@@ -37,7 +37,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
               <span className="text-sm text-gray-500">•</span>
               <div className="flex items-center gap-1 text-sm text-gray-500">
                 <Calendar className="w-4 h-4" />
-                {new Date(article.date).toLocaleDateString("en-US", {
+                {new Date(article.published_date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
@@ -52,7 +52,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
             <div className="flex items-center justify-between border-t border-b border-gray-200 py-4">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4 text-gray-400" />
-                <span className="text-sm text-gray-600">By IBAG Editorial Team</span>
+                <span className="text-sm text-gray-600">By {article.author}</span>
               </div>
               <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                 <Share2 className="w-4 h-4" />
@@ -64,7 +64,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
           {/* Featured Image */}
           <div className="mb-8">
             <img
-              src={article.image || "/placeholder.svg"}
+              src={article.image_url || "/placeholder.svg"}
               alt={article.title}
               className="w-full h-96 object-cover rounded-lg shadow-lg"
             />

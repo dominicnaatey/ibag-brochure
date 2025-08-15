@@ -2,22 +2,46 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ProtectedRoute } from "@/components/admin/protected-route"
 import { AdminHeader } from "@/components/admin/admin-header"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { Button } from "@/components/ui/button"
-import { mockMembers, type Member } from "@/lib/mock-data"
+import { membersService } from "@/lib/supabase-service"
+import type { Database } from "@/lib/supabase"
 import { Plus, Edit, Trash2, Mail, Phone, MapPin, Building, Calendar } from "lucide-react"
 
+type Member = Database['public']['Tables']['members']['Row']
+
 export default function AdminMembersPage() {
-  const [members, setMembers] = useState<Member[]>(mockMembers)
+  const [members, setMembers] = useState<Member[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editingMember, setEditingMember] = useState<Member | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const handleDelete = (id: string) => {
+  // Fetch members from Supabase
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const data = await membersService.getAll()
+        setMembers(data)
+      } catch (error) {
+        console.error('Error fetching members:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchMembers()
+  }, [])
+
+  const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this member?")) {
-      setMembers(members.filter((member) => member.id !== id))
+      try {
+        await membersService.delete(id)
+        setMembers(members.filter((member) => member.id !== id))
+      } catch (error) {
+        console.error('Error deleting member:', error)
+      }
     }
   }
 

@@ -4,22 +4,13 @@ import { SearchBar } from "@/components/search-bar"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { Calendar, User } from "lucide-react"
 import Link from "next/link"
-import { mockNews } from "@/lib/mock-data"
+import { newsService } from "@/lib/supabase-service"
 
-export default function NewsPage() {
-  const featuredNews = {
-    id: 1, // added ID for linking
-    title: "IBAG Signs Historic Partnership Agreement with Ghana Investment Promotion Centre",
-    excerpt:
-      "This landmark agreement will facilitate increased Italian investment in Ghana's key sectors including manufacturing, agriculture, and technology.",
-    date: "February 15, 2024",
-    author: "IBAG Communications",
-    image: "/placeholder.svg?height=400&width=800",
-    content:
-      "The Italian Business Association of Ghana has entered into a strategic partnership with the Ghana Investment Promotion Centre to enhance bilateral trade relations...",
-  }
-
-  const recentNews = mockNews.slice(1, 7) // Skip first item to avoid duplication with featured
+export default async function NewsPage() {
+  // Fetch news from Supabase
+  const allNews = await newsService.getAll()
+  const featuredNews = allNews[0] // Use the most recent news as featured
+  const recentNews = allNews.slice(1, 7) // Skip first item to avoid duplication with featured
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -51,28 +42,30 @@ export default function NewsPage() {
             <div className="max-w-4xl mx-auto">
               <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                 <img
-                  src={featuredNews.image || "/placeholder.svg"}
-                  alt={featuredNews.title}
+                  src={featuredNews?.image_url || "/placeholder.svg"}
+                  alt={featuredNews?.title || "News Article"}
                   className="w-full h-64 md:h-96 object-cover"
                 />
                 <div className="p-8">
                   <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4" />
-                      <span>{featuredNews.date}</span>
+                      <span>{featuredNews ? new Date(featuredNews.published_date).toLocaleDateString() : ''}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <User className="h-4 w-4" />
-                      <span>{featuredNews.author}</span>
+                      <span>{featuredNews?.author || 'IBAG Team'}</span>
                     </div>
                   </div>
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">{featuredNews.title}</h2>
-                  <p className="text-lg text-gray-600 leading-relaxed mb-6">{featuredNews.excerpt}</p>
-                  <Link href={`/news/${featuredNews.id}`}>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">{featuredNews?.title || 'No Featured News'}</h2>
+                  <p className="text-lg text-gray-600 leading-relaxed mb-6">{featuredNews?.excerpt || 'No excerpt available'}</p>
+                  {featuredNews && (
+                    <Link href={`/news/${featuredNews.id}`}>
                     <button className="bg-gray-800 hover:bg-purple-600 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105">
                       Read Full Article
                     </button>
-                  </Link>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -102,7 +95,7 @@ export default function NewsPage() {
                       </span>
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
                         <Calendar className="h-3 w-3" />
-                        <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+                        <span>{new Date(article.published_date).toLocaleDateString()}</span>
                       </div>
                     </div>
 
@@ -117,7 +110,7 @@ export default function NewsPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
                         <User className="h-3 w-3" />
-                        <span>IBAG Team</span>
+                        <span>{article.author}</span>
                       </div>
                       <Link
                         href={`/news/${article.id}`}

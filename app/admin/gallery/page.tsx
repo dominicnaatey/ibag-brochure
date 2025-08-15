@@ -2,32 +2,56 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ProtectedRoute } from "@/components/admin/protected-route"
 import { AdminHeader } from "@/components/admin/admin-header"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { Button } from "@/components/ui/button"
-import { mockGallery, type GalleryImage } from "@/lib/mock-data"
+import { galleryService } from "@/lib/supabase-service"
+import type { Database } from "@/lib/supabase"
 import { Trash2, Upload, Calendar } from "lucide-react"
 
-export default function AdminGalleryPage() {
-  const [images, setImages] = useState<GalleryImage[]>(mockGallery)
-  const [showUploadForm, setShowUploadForm] = useState(false)
+type GalleryImage = Database['public']['Tables']['gallery']['Row']
 
-  const handleDelete = (id: string) => {
+export default function AdminGalleryPage() {
+  const [images, setImages] = useState<GalleryImage[]>([])
+  const [showUploadForm, setShowUploadForm] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  // Fetch images from Supabase
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const data = await galleryService.getAll()
+        setImages(data)
+      } catch (error) {
+        console.error('Error fetching images:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchImages()
+  }, [])
+
+  const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this image?")) {
-      setImages(images.filter((image) => image.id !== id))
+      try {
+        await galleryService.delete(id)
+        setImages(images.filter((image) => image.id !== id))
+      } catch (error) {
+        console.error('Error deleting image:', error)
+      }
     }
   }
 
-  const handleUpload = (imageData: Partial<GalleryImage>) => {
-    const newImage: GalleryImage = {
-      id: Date.now().toString(),
-      uploadedAt: new Date().toISOString().split("T")[0],
-      ...(imageData as GalleryImage),
+  const handleUpload = async (imageData: Partial<GalleryImage>) => {
+    try {
+      const newImage = await galleryService.create(imageData as any)
+      setImages([newImage, ...images])
+      setShowUploadForm(false)
+    } catch (error) {
+      console.error('Error uploading image:', error)
     }
-    setImages([newImage, ...images])
-    setShowUploadForm(false)
   }
 
   return (

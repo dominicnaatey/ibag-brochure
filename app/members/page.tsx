@@ -1,8 +1,11 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { membersService } from "@/lib/supabase-service"
 
-export default function MembersPage() {
+export default async function MembersPage() {
+  // Fetch members from Supabase
+  const allMembers = await membersService.getAll()
   const memberCategories = [
     {
       title: "Corporate Members",
@@ -34,14 +37,8 @@ export default function MembersPage() {
     },
   ]
 
-  const featuredMembers = [
-    { name: "Rossi Import & Export", category: "Import/Export", location: "Accra" },
-    { name: "Milano Construction Ghana", category: "Construction", location: "Kumasi" },
-    { name: "Bella Vista Restaurant", category: "Hospitality", location: "Accra" },
-    { name: "Ferrari Logistics", category: "Logistics", location: "Tema" },
-    { name: "Venetian Fashion House", category: "Fashion", location: "Accra" },
-    { name: "Tuscany Real Estate", category: "Real Estate", location: "Accra" },
-  ]
+  // Use real members from database
+  const featuredMembers = allMembers.slice(0, 6) // Show first 6 members
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -119,10 +116,10 @@ export default function MembersPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-800">{member.name}</h3>
-                      <p className="text-sm text-purple-600">{member.category}</p>
+                      <p className="text-sm text-purple-600">{member.company || 'Individual Member'}</p>
                     </div>
                   </div>
-                  <p className="text-gray-600 text-sm">{member.location}</p>
+                  <p className="text-gray-600 text-sm">{member.position || member.membership_type}</p>
                 </div>
               ))}
             </div>

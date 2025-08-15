@@ -2,22 +2,47 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ProtectedRoute } from "@/components/admin/protected-route"
 import { AdminHeader } from "@/components/admin/admin-header"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { Button } from "@/components/ui/button"
-import { mockNews, type NewsArticle } from "@/lib/mock-data"
+import { newsService } from "@/lib/supabase-service"
+import type { Database } from "@/lib/supabase"
 import { Plus, Edit, Trash2, Eye, Calendar, User } from "lucide-react"
 
+type NewsArticle = Database['public']['Tables']['news']['Row']
+
 export default function AdminNewsPage() {
-  const [articles, setArticles] = useState<NewsArticle[]>(mockNews)
+  const [articles, setArticles] = useState<NewsArticle[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editingArticle, setEditingArticle] = useState<NewsArticle | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const handleDelete = (id: string) => {
+  // Fetch articles from Supabase
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const data = await newsService.getAll()
+        setArticles(data)
+      } catch (error) {
+        console.error('Error fetching articles:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchArticles()
+  }, [])
+
+  const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this article?")) {
-      setArticles(articles.filter((article) => article.id !== id))
+      try {
+        await newsService.delete(id)
+        setArticles(articles.filter((article) => article.id !== id))
+      } catch (error) {
+        console.error('Error deleting article:', error)
+        alert('Failed to delete article')
+      }
     }
   }
 
@@ -71,6 +96,10 @@ export default function AdminNewsPage() {
                   setEditingArticle(null)
                 }}
               />
+            ) : loading ? (
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+                <p className="text-gray-500">Loading articles...</p>
+              </div>
             ) : (
               <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="overflow-x-auto">
@@ -79,8 +108,6 @@ export default function AdminNewsPage() {
                       <tr>
                         <th className="text-left py-4 px-6 font-semibold text-gray-800">Title</th>
                         <th className="text-left py-4 px-6 font-semibold text-gray-800">Author</th>
-                        <th className="text-left py-4 px-6 font-semibold text-gray-800">Category</th>
-                        <th className="text-left py-4 px-6 font-semibold text-gray-800">Status</th>
                         <th className="text-left py-4 px-6 font-semibold text-gray-800">Published</th>
                         <th className="text-left py-4 px-6 font-semibold text-gray-800">Actions</th>
                       </tr>
@@ -101,25 +128,9 @@ export default function AdminNewsPage() {
                             </div>
                           </td>
                           <td className="py-4 px-6">
-                            <span className="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">
-                              {article.category}
-                            </span>
-                          </td>
-                          <td className="py-4 px-6">
-                            <span
-                              className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                article.status === "published"
-                                  ? "bg-green-100 text-green-600"
-                                  : "bg-yellow-100 text-yellow-600"
-                              }`}
-                            >
-                              {article.status}
-                            </span>
-                          </td>
-                          <td className="py-4 px-6">
                             <div className="flex items-center space-x-2">
                               <Calendar className="h-4 w-4 text-gray-400" />
-                              <span className="text-sm text-gray-600">{article.publishedAt}</span>
+                              <span className="text-sm text-gray-600">{new Date(article.published_date).toLocaleDateString()}</span>
                             </div>
                           </td>
                           <td className="py-4 px-6">

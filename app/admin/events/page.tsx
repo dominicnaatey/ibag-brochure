@@ -2,22 +2,46 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ProtectedRoute } from "@/components/admin/protected-route"
 import { AdminHeader } from "@/components/admin/admin-header"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { Button } from "@/components/ui/button"
-import { mockEvents, type Event } from "@/lib/mock-data"
+import { eventsService } from "@/lib/supabase-service"
+import type { Database } from "@/lib/supabase"
 import { Plus, Edit, Trash2, Calendar, MapPin, Users, Clock } from "lucide-react"
 
+type Event = Database['public']['Tables']['events']['Row']
+
 export default function AdminEventsPage() {
-  const [events, setEvents] = useState<Event[]>(mockEvents)
+  const [events, setEvents] = useState<Event[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editingEvent, setEditingEvent] = useState<Event | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const handleDelete = (id: string) => {
+  // Fetch events from Supabase
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const data = await eventsService.getAll()
+        setEvents(data)
+      } catch (error) {
+        console.error('Error fetching events:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchEvents()
+  }, [])
+
+  const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this event?")) {
-      setEvents(events.filter((event) => event.id !== id))
+      try {
+        await eventsService.delete(id)
+        setEvents(events.filter((event) => event.id !== id))
+      } catch (error) {
+        console.error('Error deleting event:', error)
+      }
     }
   }
 
