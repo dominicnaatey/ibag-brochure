@@ -49,7 +49,7 @@ export default async function EventsGalleryPage() {
                     <div className="flex items-center space-x-3">
                       <Calendar className="h-4 w-4 text-purple-600" />
                       <span className="text-gray-600 text-sm">
-                        {new Date(event.event_date).toLocaleDateString()} at {event.event_time}
+                        {new Date(event.date).toLocaleDateString()} at {new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
                     <div className="flex items-center space-x-3">
