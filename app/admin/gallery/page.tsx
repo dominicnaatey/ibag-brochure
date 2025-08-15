@@ -136,7 +136,7 @@ export default function AdminGalleryPage() {
                     </Button>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
 
             {images.length === 0 && (
