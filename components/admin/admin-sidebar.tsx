@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, FileText, Calendar, Users, ImageIcon, Settings, Home } from "lucide-react"
+import { LayoutDashboard, FileText, Calendar, Users, ImageIcon, Settings, Home, Mail } from "lucide-react"
 
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -10,6 +10,7 @@ const navigation = [
   { name: "Events", href: "/admin/events", icon: Calendar },
   { name: "Members", href: "/admin/members", icon: Users },
   { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
+  { name: "Contacts", href: "/admin/contacts", icon: Mail },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
 
