@@ -38,7 +38,7 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Error fetching contact stats:', error)
     }
-  } // <- This closing brace was missing
+  } // <- Add this closing brace
 
   const stats = [
     { name: "News Articles", value: "12", icon: FileText, color: "bg-blue-500", trend: "+2 this month" },
