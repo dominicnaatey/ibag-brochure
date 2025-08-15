@@ -60,17 +60,25 @@ export default function AdminEventsPage() {
   const handleSave = async (eventData: ExtendedEvent) => {
     try {
       // Only save properties that exist in the database schema
-      const dbEventData: Partial<Event> = {
-        title: eventData.title,
-        description: eventData.description,
-        date: eventData.date,
-        location: eventData.location,
-        image_url: eventData.image_url
+      const dbEventData: EventInsert = {
+        title: eventData.title || "",
+        description: eventData.description || "",
+        date: eventData.date || "",
+        location: eventData.location || "",
+        image_url: eventData.image_url || null
       }
 
       if (editingEvent) {
-        await eventsService.update(editingEvent.id, dbEventData)
-        setEvents(events.map(e => e.id === editingEvent.id ? { ...e, ...dbEventData } : e))
+        // For updates, we can use Partial<Event> since we're updating existing data
+        const updateData: EventUpdate = {
+          title: eventData.title,
+          description: eventData.description,
+          date: eventData.date,
+          location: eventData.location,
+          image_url: eventData.image_url
+        }
+        await eventsService.update(editingEvent.id, updateData)
+        setEvents(events.map(e => e.id === editingEvent.id ? { ...e, ...updateData } : e))
       } else {
         const newEvent = await eventsService.create(dbEventData)
         setEvents([...events, newEvent])
