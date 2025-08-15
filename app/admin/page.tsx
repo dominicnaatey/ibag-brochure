@@ -98,7 +98,7 @@ export default function AdminDashboard() {
                     <TrendingUp className="h-3 w-3 mr-1" />
                     <span>{stat.trend}</span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
 
