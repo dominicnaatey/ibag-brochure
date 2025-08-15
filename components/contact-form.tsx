@@ -25,8 +25,19 @@ export function ContactForm() {
     setError("")
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to send message')
+      }
+
       setIsSubmitted(true)
       setFormData({
         firstName: "",
@@ -37,7 +48,7 @@ export function ContactForm() {
         message: "",
       })
     } catch (err) {
-      setError("Failed to send message. Please try again.")
+      setError(err instanceof Error ? err.message : "Failed to send message. Please try again.")
     } finally {
       setIsLoading(false)
     }
