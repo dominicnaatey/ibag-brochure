@@ -9,9 +9,12 @@ import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { Button } from "@/components/ui/button"
 import { eventsService } from "@/lib/supabase-service"
 import type { Database } from "@/lib/supabase"
-import { Plus, Edit, Trash2, Calendar, MapPin, Users, Clock } from "lucide-react"
 
 type Event = Database['public']['Tables']['events']['Row']
+type EventInsert = Database['public']['Tables']['events']['Insert']
+type EventUpdate = Database['public']['Tables']['events']['Update']
+
+import { Plus, Edit, Trash2, Calendar, MapPin, Users, Clock } from "lucide-react"
 
 // Extended Event type for admin functionality
 type ExtendedEvent = Event & {
