@@ -7,6 +7,7 @@ import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { supabase } from "@/lib/supabase"
 import { FileText, Calendar, Users, ImageIcon, TrendingUp, Eye, Mail } from "lucide-react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 
 export default function AdminDashboard() {
   const [contactsCount, setContactsCount] = useState(0)
@@ -61,11 +62,20 @@ export default function AdminDashboard() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-              {stats.map((stat) => (
-                <div
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.1 }}
+            >
+              {stats.map((stat, index) => (
+                <motion.div
                   key={stat.name}
                   className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -82,7 +92,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Recent Activity */}
