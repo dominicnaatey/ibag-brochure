@@ -1,15 +1,41 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { ProtectedRoute } from "@/components/admin/protected-route"
 import { AdminHeader } from "@/components/admin/admin-header"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
-import { FileText, Calendar, Users, ImageIcon, TrendingUp, Eye } from "lucide-react"
+import { supabase } from "@/lib/supabase"
+import { FileText, Calendar, Users, ImageIcon, TrendingUp, Eye, Mail } from "lucide-react"
+import Link from "next/link"
 
 export default function AdminDashboard() {
+  const [contactsCount, setContactsCount] = useState(0)
+  const [newContactsCount, setNewContactsCount] = useState(0)
+
+  useEffect(() => {
+    fetchContactStats()
+  }, [])
+
+  const fetchContactStats = async () => {
+    try {
+      const { data: allContacts, error: allError } = await supabase
+        .from('contact_submissions')
+        .select('id, status')
+
+      if (!allError && allContacts) {
+        setContactsCount(allContacts.length)
+        setNewContactsCount(allContacts.filter(c => c.status === 'new').length)
+      }
+    } catch (error) {
+      console.error('Error fetching contact stats:', error)
+    }
+  }
+
   const stats = [
     { name: "News Articles", value: "12", icon: FileText, color: "bg-blue-500", trend: "+2 this month" },
     { name: "Upcoming Events", value: "3", icon: Calendar, color: "bg-green-500", trend: "Next: March 15" },
     { name: "Total Members", value: "156", icon: Users, color: "bg-purple-500", trend: "+8 this month" },
+    { name: "Contact Messages", value: contactsCount.toString(), icon: Mail, color: "bg-indigo-500", trend: newContactsCount > 0 ? `${newContactsCount} new` : "No new messages" },
     { name: "Gallery Images", value: "48", icon: ImageIcon, color: "bg-orange-500", trend: "+12 this week" },
   ]
 
@@ -35,7 +61,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
               {stats.map((stat) => (
                 <div
                   key={stat.name}
@@ -81,7 +107,7 @@ export default function AdminDashboard() {
               {/* Quick Actions */}
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                   <button className="p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left transition-all hover:scale-105">
                     <FileText className="h-6 w-6 text-purple-600 mb-2" />
                     <p className="font-medium text-gray-800">Add News</p>
@@ -99,6 +125,12 @@ export default function AdminDashboard() {
                     <p className="font-medium text-gray-800">Manage Members</p>
                     <p className="text-xs text-gray-500">View member list</p>
                   </button>
+
+                  <Link href="/admin/contacts" className="p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left transition-all hover:scale-105 block">
+                    <Mail className="h-6 w-6 text-indigo-600 mb-2" />
+                    <p className="font-medium text-gray-800">View Contacts</p>
+                    <p className="text-xs text-gray-500">Manage submissions</p>
+                  </Link>
 
                   <button className="p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left transition-all hover:scale-105">
                     <Eye className="h-6 w-6 text-orange-600 mb-2" />
