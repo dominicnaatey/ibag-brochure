@@ -38,23 +38,23 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
             Back to News
           </Link>
 
-        <article className="max-w-4xl mx-auto">
-          {/* Header */}
-          <header className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary" className="bg-green-100 text-green-800">
-                {article.category}
-              </Badge>
-              <span className="text-sm text-gray-500">•</span>
-              <div className="flex items-center gap-1 text-sm text-gray-500">
-                <Calendar className="w-4 h-4" />
-                {new Date(article.published_date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+          <article className="max-w-4xl mx-auto">
+            {/* Header */}
+            <header className="mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Badge variant="secondary" className="bg-green-100 text-green-800">
+                  {article.category}
+                </Badge>
+                <span className="text-sm text-gray-500">•</span>
+                <div className="flex items-center gap-1 text-sm text-gray-500">
+                  <Calendar className="w-4 h-4" />
+                  {new Date(article.published_date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </div>
               </div>
-            </div>
 
             <h1 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">{article.title}</h1>
 
