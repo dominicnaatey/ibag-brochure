@@ -7,7 +7,7 @@ import { eventsService, galleryService } from "@/lib/supabase-service"
 
 export default async function EventsGalleryPage() {
   const allEvents = await eventsService.getAll()
-  const upcomingEvents = allEvents.filter((event) => new Date(event.event_date) > new Date()).slice(0, 3)
+  const upcomingEvents = allEvents.filter((event) => new Date(event.date) > new Date()).slice(0, 3)
 
   const pastEventsGallery = await galleryService.getAll()
   const galleryImages = pastEventsGallery.slice(0, 6)
@@ -100,7 +100,7 @@ export default async function EventsGalleryPage() {
                     <div className="p-6">
                       <h3 className="text-lg font-semibold text-gray-800 mb-2">{galleryItem.title}</h3>
                       <p className="text-purple-600 text-sm font-medium mb-3">
-                        {new Date(galleryItem.date).toLocaleDateString()}
+                        {new Date(galleryItem.created_at).toLocaleDateString()}
                       </p>
                       <p className="text-gray-600 text-sm">{galleryItem.description}</p>
                     </div>
