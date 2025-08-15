@@ -3,6 +3,8 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 import { newsService } from "@/lib/supabase-service"
 
 interface NewsDetailPageProps {
@@ -25,13 +27,16 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
     .slice(0, 2)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
-        <Link href="/news" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6">
-          <ArrowLeft className="w-4 h-4" />
-          Back to News
-        </Link>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <main className="flex-1 bg-gradient-to-br from-slate-50 to-white">
+        <div className="container mx-auto px-4 py-8">
+          {/* Back Button */}
+          <Link href="/news" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6">
+            <ArrowLeft className="w-4 h-4" />
+            Back to News
+          </Link>
 
         <article className="max-w-4xl mx-auto">
           {/* Header */}
@@ -148,6 +153,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           </div>
         </article>
       </div>
+      
+      <Footer />
     </div>
   )
 }

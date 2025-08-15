@@ -4,6 +4,8 @@ import { ArrowLeft, Calendar, MapPin, Clock, Users, ExternalLink } from "lucide-
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 import { eventsService } from "@/lib/supabase-service"
 
 interface EventDetailPageProps {
@@ -22,13 +24,16 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
   const isUpcoming = new Date(event.date) > new Date()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
-        <Link href="/events-gallery" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6">
-          <ArrowLeft className="w-4 h-4" />
-          Back to Events & Gallery
-        </Link>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <main className="flex-1 bg-gradient-to-br from-slate-50 to-white">
+        <div className="container mx-auto px-4 py-8">
+          {/* Back Button */}
+          <Link href="/events-gallery" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Events & Gallery
+          </Link>
 
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8">
@@ -183,7 +188,9 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
             </div>
           </div>
         </div>
-      </div>
+      </main>
+      
+      <Footer />
     </div>
   )
 }
