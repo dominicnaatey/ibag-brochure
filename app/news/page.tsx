@@ -91,7 +91,7 @@ export default async function NewsPage() {
                   >
                     <div className="flex items-center justify-between mb-3">
                       <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs font-medium">
-                        {article.category}
+                        News
                       </span>
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
                         <Calendar className="h-3 w-3" />
