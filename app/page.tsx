@@ -1,9 +1,26 @@
+"use client"
+
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { motion } from "framer-motion"
 
 export default function HomePage() {
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  }
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -12,22 +29,44 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-gray-50 to-gray-100 py-20">
           <div className="container mx-auto px-4 text-center">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6 animate-fade-in">
+            <motion.div 
+              className="max-w-4xl mx-auto"
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+            >
+              <motion.h1 
+                className="text-4xl md:text-6xl font-bold text-gray-800 mb-6"
+                variants={fadeInUp}
+              >
                 Connecting Italian Heritage to Ghana's Business Landscape
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto animate-fade-in-delay">
+              </motion.h1>
+              <motion.p 
+                className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
+                variants={fadeInUp}
+              >
                 Fostering collaboration, innovation, and growth among businesses rooted in Italian culture.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-delay-2">
-                <button className="bg-gray-800 hover:bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              </motion.p>
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4 justify-center"
+                variants={fadeInUp}
+              >
+                <motion.button 
+                  className="bg-gray-800 hover:bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   Join Us Today
-                </button>
-                <button className="border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
+                </motion.button>
+                <motion.button 
+                  className="border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   Learn More
-                </button>
-              </div>
-            </div>
+                </motion.button>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -89,6 +128,7 @@ export default function HomePage() {
       </main>
 
       <Footer />
+      <NewsletterSignup />
       <ScrollToTop />
     </div>
   )
