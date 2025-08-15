@@ -55,14 +55,28 @@ export const metadata: Metadata = {
   },
 }
 
+import { PWAInstall } from '@/components/pwa-install'
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} antialiased`}>
-      <body className="font-sans" suppressHydrationWarning={true}>{children}</body>
+    <html lang="en" className={dmSans.variable}>
+      <body className="font-sans antialiased">
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <PWAInstall />
+          </ThemeProvider>
+        </AuthProvider>
+      </body>
     </html>
   )
 }
