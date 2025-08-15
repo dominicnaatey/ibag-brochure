@@ -38,7 +38,6 @@ export default function NewsPage() {
 
               <div className="max-w-md mx-auto">
                 <SearchBar
-                  onSearch={(query) => console.log("Searching for:", query)}
                   placeholder="Search news articles..."
                 />
               </div>
@@ -103,7 +102,7 @@ export default function NewsPage() {
                       </span>
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
                         <Calendar className="h-3 w-3" />
-                        <span>{new Date(article.date).toLocaleDateString()}</span>
+                        <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
                       </div>
                     </div>
 
