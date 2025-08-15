@@ -191,6 +191,6 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
       </main>
       
       <Footer />
-    </div>
+    }
   )
 }
