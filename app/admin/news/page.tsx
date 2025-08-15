@@ -12,6 +12,15 @@ import type { Database } from "@/lib/supabase"
 import { Plus, Edit, Trash2, Eye, Calendar, User } from "lucide-react"
 
 type NewsArticle = Database['public']['Tables']['news']['Row']
+type NewsInsert = Database['public']['Tables']['news']['Insert']
+type NewsUpdate = Database['public']['Tables']['news']['Update']
+
+// Extended type for UI-specific properties
+type ExtendedNewsArticle = NewsArticle & {
+  category?: string
+  status?: 'draft' | 'published'
+  publishedAt?: string
+}
 
 export default function AdminNewsPage() {
   const [articles, setArticles] = useState<NewsArticle[]>([])
@@ -56,41 +65,45 @@ export default function AdminNewsPage() {
     setShowForm(true)
   }
 
-  return (
-    <ProtectedRoute>
-      <div className="flex min-h-screen bg-gray-50">
-        <AdminSidebar />
+  const handleSave = async (articleData: ExtendedNewsArticle) => {
+    try {
+      // Only save properties that exist in the database schema
+      const dbArticleData: NewsInsert = {
+        title: articleData.title || "",
+        content: articleData.content || "",
+        excerpt: articleData.excerpt || "",
+        author: articleData.author || "",
+        published_date: articleData.published_date || new Date().toISOString(),
+        image_url: articleData.image_url || null
+      }
 
-        <div className="flex-1">
-          <AdminHeader />
-
-          <main className="p-6">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">News Articles</h1>
-                <p className="text-gray-600">Manage your news articles and announcements</p>
-              </div>
-              <Button
-                onClick={handleAdd}
-                className="bg-purple-600 hover:bg-purple-700 text-white flex items-center space-x-2"
-              >
-                <Plus className="h-4 w-4" />
-                <span>Add Article</span>
-              </Button>
-            </div>
+      if (editingArticle) {
+        // For updates
+        const updateData: NewsUpdate = {
+          title: articleData.title,
+          content: articleData.content,
+          excerpt: articleData.excerpt,
+          author: articleData.author,
+          published_date: articleData.published_date,
+          image_url: articleData.image_url
+        }
+        await newsService.update(editingArticle.id, updateData)
+        setArticles(articles.map(a => a.id === editingArticle.id ? { ...a, ...updateData } : a))
+      } else {
+        const newArticle = await newsService.create(dbArticleData)
+        setArticles([...articles, newArticle])
+      }
+      setShowForm(false)
+      setEditingArticle(null)
+    } catch (error) {
+      console.error('Error saving article:', error)
+    }
+  }
 
             {showForm ? (
               <NewsForm
                 article={editingArticle}
-                onSave={(article) => {
-                  if (editingArticle) {
-                    setArticles(articles.map((a) => (a.id === article.id ? article : a)))
-                  } else {
-                    setArticles([...articles, { ...article, id: Date.now().toString() }])
-                  }
-                  setShowForm(false)
-                  setEditingArticle(null)
-                }}
+                onSave={handleSave}
                 onCancel={() => {
                   setShowForm(false)
                   setEditingArticle(null)
@@ -166,119 +179,142 @@ function NewsForm({
   onCancel,
 }: {
   article: NewsArticle | null
-  onSave: (article: NewsArticle) => void
+  onSave: (article: ExtendedNewsArticle) => void
   onCancel: () => void
 }) {
-  const [formData, setFormData] = useState<Partial<NewsArticle>>({
+  const [formData, setFormData] = useState<Partial<ExtendedNewsArticle>>({
     title: article?.title || "",
     excerpt: article?.excerpt || "",
     content: article?.content || "",
     author: article?.author || "",
-    category: article?.category || "",
-    status: article?.status || "draft",
-    publishedAt: article?.publishedAt || new Date().toISOString().split("T")[0],
+    category: "General", // Default category since it's not in database
+    status: "draft", // Default status since it's not in database
+    published_date: article?.published_date || new Date().toISOString().split("T")[0],
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onSave({
+    
+    // Create extended article with UI properties
+    const extendedArticle: ExtendedNewsArticle = {
       id: article?.id || "",
-      ...(formData as NewsArticle),
-    })
+      title: formData.title || "",
+      content: formData.content || "",
+      excerpt: formData.excerpt || "",
+      author: formData.author || "",
+      published_date: formData.published_date || new Date().toISOString(),
+      image_url: article?.image_url || null,
+      created_at: article?.created_at || new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      // UI-only properties
+      category: formData.category,
+      status: formData.status
+    }
+    
+    onSave(extendedArticle)
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">{article ? "Edit Article" : "Add New Article"}</h2>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
-            <input
-              type="text"
-              required
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Author *</label>
-            <input
-              type="text"
-              required
-              value={formData.author}
-              onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-            <select
-              required
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            >
-              <option value="">Select Category</option>
-              <option value="Partnership">Partnership</option>
-              <option value="Business Development">Business Development</option>
-              <option value="Cultural Exchange">Cultural Exchange</option>
-              <option value="Member Spotlight">Member Spotlight</option>
-              <option value="Economic Report">Economic Report</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>
-            <select
-              required
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value as "draft" | "published" })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            >
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
-            </select>
-          </div>
-        </div>
-
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt *</label>
-          <textarea
+          <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+          <input
+            type="text"
             required
-            rows={3}
-            value={formData.excerpt}
-            onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+            value={formData.title || ""}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            placeholder="Brief summary of the article..."
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Content *</label>
-          <textarea
+          <label className="block text-sm font-medium text-gray-700 mb-2">Author *</label>
+          <input
+            type="text"
             required
-            rows={8}
-            value={formData.content}
-            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+            value={formData.author || ""}
+            onChange={(e) => setFormData({ ...formData, author: e.target.value })}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            placeholder="Full article content..."
           />
         </div>
 
-        <div className="flex items-center space-x-4">
-          <Button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white">
-            {article ? "Update Article" : "Create Article"}
-          </Button>
-          <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Category (Display Only)</label>
+          <select
+            value={formData.category || "General"}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-50"
+            disabled
+          >
+            <option value="General">General</option>
+            <option value="Partnership">Partnership</option>
+            <option value="Business Development">Business Development</option>
+            <option value="Cultural Exchange">Cultural Exchange</option>
+            <option value="Member Spotlight">Member Spotlight</option>
+            <option value="Economic Report">Economic Report</option>
+          </select>
+          <p className="text-xs text-gray-500 mt-1">Note: Category is for display only and not stored in database</p>
         </div>
-      </form>
-    </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Status (Display Only)</label>
+          <select
+            value={formData.status || "draft"}
+            onChange={(e) => setFormData({ ...formData, status: e.target.value as "draft" | "published" })}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-50"
+            disabled
+          >
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+          <p className="text-xs text-gray-500 mt-1">Note: Status is for display only and not stored in database</p>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt *</label>
+        <textarea
+          rows={3}
+          required
+          value={formData.excerpt || ""}
+          onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+          placeholder="Brief summary of the article..."
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Content *</label>
+        <textarea
+          rows={8}
+          required
+          value={formData.content || ""}
+          onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+          placeholder="Full article content..."
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Published Date *</label>
+        <input
+          type="date"
+          required
+          value={formData.published_date?.split('T')[0] || ""}
+          onChange={(e) => setFormData({ ...formData, published_date: e.target.value })}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+        />
+      </div>
+
+      <div className="flex items-center space-x-4">
+        <Button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white">
+          {article ? "Update Article" : "Create Article"}
+        </Button>
+        <Button type="button" variant="outline" onClick={onCancel}>
+          Cancel
+        </Button>
+      </div>
+    </form>
   )
 }
