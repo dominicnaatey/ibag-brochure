@@ -68,6 +68,7 @@ export const mockNews: NewsArticle[] = [
     category: "Business Development",
     publishedAt: "2024-02-10",
     status: "published",
+    image: "/placeholder.svg?height=300&width=600",
   },
 ]
 
