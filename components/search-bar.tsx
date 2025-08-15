@@ -7,12 +7,12 @@ import { Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface SearchBarProps {
-  onSearch: (query: string) => void
+  onSearch?: (query: string) => void
   placeholder?: string
   className?: string
 }
 
-export function SearchBar({ onSearch, placeholder = "Search...", className = "" }: SearchBarProps) {
+export function SearchBar({ onSearch = () => {}, placeholder = "Search...", className = "" }: SearchBarProps) {
   const [query, setQuery] = useState("")
   const [isExpanded, setIsExpanded] = useState(false)
 
