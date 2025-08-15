@@ -19,7 +19,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     notFound()
   }
 
-  const isUpcoming = new Date(event.event_date) > new Date()
+  const isUpcoming = new Date(event.date) > new Date()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
