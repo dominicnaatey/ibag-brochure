@@ -1,6 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { DM_Sans } from "next/font/google"
+import { AuthProvider } from "@/contexts/auth-context"
+import { ThemeProvider } from "@/components/theme-provider"
+import { PWAInstall } from '@/components/pwa-install'
 import "./globals.css"
 
 const dmSans = DM_Sans({
@@ -54,8 +57,6 @@ export const metadata: Metadata = {
     'application-name': 'IBAG',
   },
 }
-
-import { PWAInstall } from '@/components/pwa-install'
 
 export default function RootLayout({
   children,
