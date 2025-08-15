@@ -19,18 +19,26 @@ export default function AdminDashboard() {
 
   const fetchContactStats = async () => {
     try {
-      const { data: allContacts, error: allError } = await supabase
+      const { count } = await supabase
         .from('contact_submissions')
-        .select('id, status')
-
-      if (!allError && allContacts) {
-        setContactsCount(allContacts.length)
-        setNewContactsCount(allContacts.filter(c => c.status === 'new').length)
-      }
+        .select('*', { count: 'exact', head: true })
+      
+      setContactsCount(count || 0)
+      
+      // Get new contacts from last 7 days
+      const sevenDaysAgo = new Date()
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+      
+      const { count: newCount } = await supabase
+        .from('contact_submissions')
+        .select('*', { count: 'exact', head: true })
+        .gte('created_at', sevenDaysAgo.toISOString())
+      
+      setNewContactsCount(newCount || 0)
     } catch (error) {
       console.error('Error fetching contact stats:', error)
     }
-  }
+  } // <- This closing brace was missing
 
   const stats = [
     { name: "News Articles", value: "12", icon: FileText, color: "bg-blue-500", trend: "+2 this month" },
