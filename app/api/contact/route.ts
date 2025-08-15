@@ -43,14 +43,30 @@ export async function POST(request: NextRequest) {
     try {
       const nodemailer = require('nodemailer')
       
+      // Enhanced debugging for production
+      console.log('Email configuration check:')
+      console.log('EMAIL_USER exists:', !!process.env.EMAIL_USER)
+      console.log('EMAIL_PASS exists:', !!process.env.EMAIL_PASS)
+      console.log('EMAIL_USER value:', process.env.EMAIL_USER ? process.env.EMAIL_USER.substring(0, 5) + '***' : 'undefined')
+      
       if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
-          }
+          },
+          // Add additional configuration for better reliability
+          secure: true,
+          port: 465,
+          debug: true, // Enable debug mode
+          logger: true // Enable logging
         })
+
+        // Verify transporter configuration
+        console.log('Verifying email transporter...')
+        await transporter.verify()
+        console.log('Email transporter verified successfully')
 
         const mailOptions = {
           from: process.env.EMAIL_USER,
@@ -83,11 +99,20 @@ export async function POST(request: NextRequest) {
           `
         }
 
-        await transporter.sendMail(mailOptions)
-        console.log('Email notification sent successfully')
+        console.log('Attempting to send email...')
+        const result = await transporter.sendMail(mailOptions)
+        console.log('Email notification sent successfully:', result.messageId)
+      } else {
+        console.log('Email credentials not configured - skipping email notification')
       }
     } catch (emailError) {
-      console.log('Email notification failed (this is optional):', emailError)
+      console.error('Email notification failed (detailed error):', {
+        message: emailError.message,
+        code: emailError.code,
+        command: emailError.command,
+        response: emailError.response,
+        responseCode: emailError.responseCode
+      })
       // Don't fail the request if email fails
     }
 
