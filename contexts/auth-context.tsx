@@ -2,13 +2,15 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
-import { authService, type User } from "@/lib/auth"
+import { supabase } from "@/lib/supabase"
+import type { User } from "@supabase/supabase-js"
 
 interface AuthContextType {
   user: User | null
   login: (email: string, password: string) => Promise<boolean>
   logout: () => void
   loading: boolean
+  signUp: (email: string, password: string) => Promise<boolean>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -18,21 +20,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check for existing session on mount
-    const currentUser = authService.getCurrentUser()
-    setUser(currentUser)
-    setLoading(false)
+    // Get initial session
+    const getInitialSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      setUser(session?.user ?? null)
+      setLoading(false)
+    }
+
+    getInitialSession()
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setUser(session?.user ?? null)
+        setLoading(false)
+      }
+    )
+
+    return () => subscription.unsubscribe()
   }, [])
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setLoading(true)
     try {
-      const user = await authService.login(email, password)
-      if (user) {
-        setUser(user)
-        return true
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      
+      if (error) {
+        console.error("Login error:", error.message)
+        return false
       }
-      return false
+      
+      return !!data.user
     } catch (error) {
       console.error("Login error:", error)
       return false
@@ -41,12 +62,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const logout = () => {
-    authService.logout()
-    setUser(null)
+  const signUp = async (email: string, password: string): Promise<boolean> => {
+    setLoading(true)
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      })
+      
+      if (error) {
+        console.error("Sign up error:", error.message)
+        return false
+      }
+      
+      return !!data.user
+    } catch (error) {
+      console.error("Sign up error:", error)
+      return false
+    } finally {
+      setLoading(false)
+    }
   }
 
-  return <AuthContext.Provider value={{ user, login, logout, loading }}>{children}</AuthContext.Provider>
+  const logout = async () => {
+    await supabase.auth.signOut()
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout, loading, signUp }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export function useAuth() {
