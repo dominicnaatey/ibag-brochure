@@ -194,23 +194,21 @@ function MemberForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Only save properties that exist in the database schema
-    const memberData: MemberInsert = {
+    // Create a properly typed member object
+    const memberData: ExtendedMember = {
+      id: member?.id || "",
       name: formData.name || "",
       email: formData.email || "",
-      phone: formData.phone || null,
-      company: formData.company || null,
-      position: formData.position || null,
+      phone: formData.phone || null, // Ensure null instead of undefined
+      company: formData.company || null, // Ensure null instead of undefined
+      position: formData.position || null, // Ensure null instead of undefined
       membership_type: formData.membership_type || "individual",
       joined_date: formData.joined_date || new Date().toISOString().split("T")[0],
-    }
-    
-    onSave({
-      id: member?.id || "",
-      ...memberData,
       created_at: member?.created_at || new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    })
+    }
+    
+    onSave(memberData)
   }
 
   return (
@@ -224,43 +222,30 @@ function MemberForm({
             <input
               type="text"
               required
-              value={formData.name}
+              value={formData.name || ""}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Company *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Company</label>
             <input
               type="text"
-              required
-              value={formData.company}
+              value={formData.company || ""}
               onChange={(e) => setFormData({ ...formData, company: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Position</label>
             <input
               type="text"
-              required
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              value={formData.position || ""}
+              onChange={(e) => setFormData({ ...formData, position: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-              placeholder="e.g., Import/Export, Construction, etc."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Location *</label>
-            <input
-              type="text"
-              required
-              value={formData.location}
-              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+              placeholder="e.g., CEO, Manager, etc."
             />
           </div>
 
@@ -269,7 +254,7 @@ function MemberForm({
             <input
               type="email"
               required
-              value={formData.email}
+              value={formData.email || ""}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             />
@@ -279,7 +264,7 @@ function MemberForm({
             <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
             <input
               type="tel"
-              value={formData.phone}
+              value={formData.phone || ""}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             />
@@ -289,8 +274,8 @@ function MemberForm({
             <label className="block text-sm font-medium text-gray-700 mb-2">Membership Type *</label>
             <select
               required
-              value={formData.membershipType}
-              onChange={(e) => setFormData({ ...formData, membershipType: e.target.value as Member["membershipType"] })}
+              value={formData.membership_type || "individual"}
+              onChange={(e) => setFormData({ ...formData, membership_type: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             >
               <option value="individual">Individual</option>
@@ -300,25 +285,23 @@ function MemberForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>
-            <select
+            <label className="block text-sm font-medium text-gray-700 mb-2">Joined Date *</label>
+            <input
+              type="date"
               required
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value as "active" | "inactive" })}
+              value={formData.joined_date || ""}
+              onChange={(e) => setFormData({ ...formData, joined_date: e.target.value })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+            />
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <Button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white">
-            {member ? "Update Member" : "Add Member"}
-          </Button>
+        <div className="flex items-center justify-end space-x-4 pt-6">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
+          </Button>
+          <Button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white">
+            {member ? "Update Member" : "Add Member"}
           </Button>
         </div>
       </form>
