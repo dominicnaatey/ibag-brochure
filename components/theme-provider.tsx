@@ -8,11 +8,10 @@ import {
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
-    <NextThemesProvider 
-      {...props}
-      suppressHydrationWarning
-    >
-      {children}
-    </NextThemesProvider>
+    <div suppressHydrationWarning>
+      <NextThemesProvider {...props}>
+        {children}
+      </NextThemesProvider>
+    </div>
   )
 }
