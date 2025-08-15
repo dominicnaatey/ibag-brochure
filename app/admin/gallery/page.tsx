@@ -12,6 +12,13 @@ import type { Database } from "@/lib/supabase"
 import { Trash2, Upload, Calendar } from "lucide-react"
 
 type GalleryImage = Database['public']['Tables']['gallery']['Row']
+type GalleryInsert = Database['public']['Tables']['gallery']['Insert']
+
+// Extended type for UI-specific properties
+type ExtendedGalleryImage = GalleryImage & {
+  category?: string
+  uploadedAt?: string
+}
 
 export default function AdminGalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([])
@@ -44,9 +51,17 @@ export default function AdminGalleryPage() {
     }
   }
 
-  const handleUpload = async (imageData: Partial<GalleryImage>) => {
+  const handleUpload = async (imageData: Partial<GalleryInsert>) => {
     try {
-      const newImage = await galleryService.create(imageData as any)
+      // Only save properties that exist in the database
+      const dbImageData: GalleryInsert = {
+        title: imageData.title || "",
+        description: imageData.description || null,
+        image_url: imageData.image_url || "",
+        event_id: imageData.event_id || null
+      }
+      
+      const newImage = await galleryService.create(dbImageData)
       setImages([newImage, ...images])
       setShowUploadForm(false)
     } catch (error) {
@@ -85,22 +100,30 @@ export default function AdminGalleryPage() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {images.map((image) => (
-                <div key={image.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                  <img src={image.url || "/placeholder.svg"} alt={image.title} className="w-full h-48 object-cover" />
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-800 mb-2">{image.title}</h3>
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">{image.description}</p>
+              {images.map((image) => {
+                // Create extended image with UI properties
+                const extendedImage: ExtendedGalleryImage = {
+                  ...image,
+                  category: "General", // Default category since it's not in database
+                  uploadedAt: new Date(image.created_at).toLocaleDateString()
+                }
+                
+                return (
+                  <div key={image.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                    <img src={image.image_url || "/placeholder.svg"} alt={image.title} className="w-full h-48 object-cover" />
+                    <div className="p-4">
+                      <h3 className="font-semibold text-gray-800 mb-2">{image.title}</h3>
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{image.description}</p>
 
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">
-                        {image.category}
-                      </span>
-                      <div className="flex items-center space-x-1 text-xs text-gray-500">
-                        <Calendar className="h-3 w-3" />
-                        <span>{image.uploadedAt}</span>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">
+                          {extendedImage.category}
+                        </span>
+                        <div className="flex items-center space-x-1 text-xs text-gray-500">
+                          <Calendar className="h-3 w-3" />
+                          <span>{extendedImage.uploadedAt}</span>
+                        </div>
                       </div>
-                    </div>
 
                     <Button
                       variant="outline"
@@ -140,20 +163,19 @@ function UploadForm({
   onUpload,
   onCancel,
 }: {
-  onUpload: (image: Partial<GalleryImage>) => void
+  onUpload: (image: Partial<GalleryInsert>) => void
   onCancel: () => void
 }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "",
-    url: "",
+    image_url: "", // Changed from 'url' to 'image_url'
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onUpload(formData)
-    setFormData({ title: "", description: "", category: "", url: "" })
+    setFormData({ title: "", description: "", image_url: "" })
   }
 
   return (
@@ -170,22 +192,7 @@ function UploadForm({
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-          <select
-            required
-            value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-          >
-            <option value="">Select Category</option>
-            <option value="Cultural Events">Cultural Events</option>
-            <option value="Business Events">Business Events</option>
-            <option value="Networking">Networking</option>
-            <option value="Community">Community</option>
-            <option value="Awards">Awards</option>
-          </select>
-        </div>
+        {/* Removed category field since it's not in database */}
       </div>
 
       <div>
@@ -204,8 +211,8 @@ function UploadForm({
         <input
           type="url"
           required
-          value={formData.url}
-          onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+          value={formData.image_url}
+          onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
           placeholder="https://example.com/image.jpg"
         />
