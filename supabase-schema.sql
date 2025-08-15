@@ -61,11 +61,26 @@ CREATE INDEX IF NOT EXISTS idx_members_email ON members(email);
 CREATE INDEX IF NOT EXISTS idx_members_membership_type ON members(membership_type);
 CREATE INDEX IF NOT EXISTS idx_gallery_event_id ON gallery(event_id);
 
+-- Create contact_submissions table
+CREATE TABLE contact_submissions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL,
+  submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  status TEXT DEFAULT 'new' CHECK (status IN ('new', 'read', 'replied')),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Enable Row Level Security (RLS)
 ALTER TABLE events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE news ENABLE ROW LEVEL SECURITY;
 ALTER TABLE members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE gallery ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for public read access
 CREATE POLICY "Events are viewable by everyone" ON events
@@ -79,6 +94,12 @@ CREATE POLICY "Members are viewable by everyone" ON members
 
 CREATE POLICY "Gallery items are viewable by everyone" ON gallery
   FOR SELECT USING (true);
+
+-- Create policies for contact submissions (public can insert, admin can read)
+CREATE POLICY "Allow public insert on contact_submissions" ON contact_submissions FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow admin read on contact_submissions" ON contact_submissions FOR SELECT USING (auth.jwt() ->> 'email' = 'admin@ibag-ghana.org');
+CREATE POLICY "Allow admin update on contact_submissions" ON contact_submissions FOR UPDATE USING (auth.jwt() ->> 'email' = 'admin@ibag-ghana.org');
+CREATE POLICY "Allow admin delete on contact_submissions" ON contact_submissions FOR DELETE USING (auth.jwt() ->> 'email' = 'admin@ibag-ghana.org');
 
 -- Create policies for authenticated users (admin) to manage content
 CREATE POLICY "Authenticated users can insert events" ON events
