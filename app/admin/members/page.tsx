@@ -12,6 +12,14 @@ import type { Database } from "@/lib/supabase"
 import { Plus, Edit, Trash2, Mail, Phone, MapPin, Building, Calendar } from "lucide-react"
 
 type Member = Database['public']['Tables']['members']['Row']
+type MemberInsert = Database['public']['Tables']['members']['Insert']
+type MemberUpdate = Database['public']['Tables']['members']['Update']
+
+// Extended Member type for UI purposes
+type ExtendedMember = Member & {
+  status?: 'active' | 'inactive'
+  location?: string
+}
 
 export default function AdminMembersPage() {
   const [members, setMembers] = useState<Member[]>([])
@@ -101,11 +109,9 @@ export default function AdminMembersPage() {
                   <div key={member.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between mb-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          member.status === "active" ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-600"
-                        }`}
+                        className={`px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-600`}
                       >
-                        {member.status}
+                        Active
                       </span>
                       <div className="flex items-center space-x-2">
                         <Button variant="outline" size="sm" onClick={() => handleEdit(member)}>
@@ -122,11 +128,11 @@ export default function AdminMembersPage() {
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center space-x-2 text-sm text-gray-600">
                         <Building className="h-4 w-4 text-purple-600" />
-                        <span>{member.company}</span>
+                        <span>{member.company || 'N/A'}</span>
                       </div>
                       <div className="flex items-center space-x-2 text-sm text-gray-600">
                         <MapPin className="h-4 w-4 text-purple-600" />
-                        <span>{member.location}</span>
+                        <span>{member.position || 'N/A'}</span>
                       </div>
                       <div className="flex items-center space-x-2 text-sm text-gray-600">
                         <Mail className="h-4 w-4 text-purple-600" />
@@ -134,25 +140,25 @@ export default function AdminMembersPage() {
                       </div>
                       <div className="flex items-center space-x-2 text-sm text-gray-600">
                         <Phone className="h-4 w-4 text-purple-600" />
-                        <span>{member.phone}</span>
+                        <span>{member.phone || 'N/A'}</span>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between">
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          member.membershipType === "corporate"
+                          member.membership_type === "corporate"
                             ? "bg-blue-100 text-blue-600"
-                            : member.membershipType === "individual"
+                            : member.membership_type === "individual"
                               ? "bg-purple-100 text-purple-600"
                               : "bg-orange-100 text-orange-600"
                         }`}
                       >
-                        {member.membershipType}
+                        {member.membership_type}
                       </span>
                       <div className="flex items-center space-x-1 text-xs text-gray-500">
                         <Calendar className="h-3 w-3" />
-                        <span>Joined {member.joinedAt}</span>
+                        <span>Joined {new Date(member.joined_date).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
@@ -172,26 +178,38 @@ function MemberForm({
   onCancel,
 }: {
   member: Member | null
-  onSave: (member: Member) => void
+  onSave: (member: ExtendedMember) => void
   onCancel: () => void
 }) {
-  const [formData, setFormData] = useState<Partial<Member>>({
+  const [formData, setFormData] = useState<Partial<ExtendedMember>>({
     name: member?.name || "",
     company: member?.company || "",
-    category: member?.category || "",
-    location: member?.location || "",
+    position: member?.position || "", // Use position instead of location
     email: member?.email || "",
     phone: member?.phone || "",
-    membershipType: member?.membershipType || "individual",
-    status: member?.status || "active",
-    joinedAt: member?.joinedAt || new Date().toISOString().split("T")[0],
+    membership_type: member?.membership_type || "individual", // Correct property name
+    joined_date: member?.joined_date || new Date().toISOString().split("T")[0], // Correct property name
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Only save properties that exist in the database schema
+    const memberData: MemberInsert = {
+      name: formData.name || "",
+      email: formData.email || "",
+      phone: formData.phone || null,
+      company: formData.company || null,
+      position: formData.position || null,
+      membership_type: formData.membership_type || "individual",
+      joined_date: formData.joined_date || new Date().toISOString().split("T")[0],
+    }
+    
     onSave({
       id: member?.id || "",
-      ...(formData as Member),
+      ...memberData,
+      created_at: member?.created_at || new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     })
   }
 
