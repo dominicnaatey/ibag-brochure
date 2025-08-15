@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     shortcut: '/ibag_logo.ico',
     apple: '/ibag_logo.png',
   },
+  manifest: '/manifest.json',
   openGraph: {
     title: "Italian Business Association of Ghana - IBAG",
     description: "Connecting Italian Heritage to Ghana's Business Landscape",
@@ -39,6 +40,18 @@ export const metadata: Metadata = {
     title: "Italian Business Association of Ghana - IBAG",
     description: "Connecting Italian Heritage to Ghana's Business Landscape",
     images: ['/ibag_logo.png'],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "IBAG",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+    'application-name': 'IBAG',
   },
 }
 
