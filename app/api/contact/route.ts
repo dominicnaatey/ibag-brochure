@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { render } from '@react-email/render'
+import { ContactEmail } from '@/components/email-template'
 
 export async function POST(request: NextRequest) {
   try {
@@ -68,35 +70,22 @@ export async function POST(request: NextRequest) {
         await transporter.verify()
         console.log('Email transporter verified successfully')
 
+        // Render the React email template to HTML
+        const emailHtml = await render(ContactEmail({
+          firstName,
+          lastName,
+          email,
+          phone,
+          subject,
+          message,
+          submittedAt: new Date().toLocaleString()
+        }))
+
         const mailOptions = {
           from: process.env.EMAIL_USER,
           to: 'dominicnaatey@gmail.com',
           subject: `New Contact Form Submission: ${subject}`,
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
-                New Contact Form Submission
-              </h2>
-              
-              <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
-                <h3 style="color: #007bff; margin-top: 0;">Contact Information</h3>
-                <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-                <p><strong>Subject:</strong> ${subject}</p>
-              </div>
-              
-              <div style="background-color: #ffffff; padding: 20px; border: 1px solid #dee2e6; border-radius: 5px;">
-                <h3 style="color: #007bff; margin-top: 0;">Message</h3>
-                <p style="line-height: 1.6; color: #333;">${message.replace(/\n/g, '<br>')}</p>
-              </div>
-              
-              <div style="margin-top: 20px; padding: 15px; background-color: #e9ecef; border-radius: 5px; font-size: 12px; color: #6c757d;">
-                <p>This email was sent from the IBAG Ghana website contact form.</p>
-                <p>Submitted on: ${new Date().toLocaleString()}</p>
-              </div>
-            </div>
-          `
+          html: emailHtml
         }
 
         console.log('Attempting to send email...')
@@ -105,13 +94,13 @@ export async function POST(request: NextRequest) {
       } else {
         console.log('Email credentials not configured - skipping email notification')
       }
-    } catch (emailError) {
+    } catch (emailError: any) {
       console.error('Email notification failed (detailed error):', {
-        message: emailError.message,
-        code: emailError.code,
-        command: emailError.command,
-        response: emailError.response,
-        responseCode: emailError.responseCode
+        message: emailError?.message,
+        code: emailError?.code,
+        command: emailError?.command,
+        response: emailError?.response,
+        responseCode: emailError?.responseCode
       })
       // Don't fail the request if email fails
     }
