@@ -122,7 +122,8 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES 
   ('events', 'events', true),
   ('news', 'news', true),
-  ('gallery', 'gallery', true)
+  ('gallery', 'gallery', true),
+  ('members', 'members', true)
 ON CONFLICT (id) DO NOTHING;
 
 -- Create storage policies
@@ -161,6 +162,18 @@ CREATE POLICY "Authenticated users can update gallery images" ON storage.objects
 
 CREATE POLICY "Authenticated users can delete gallery images" ON storage.objects
   FOR DELETE USING (bucket_id = 'gallery' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Public can view member logos" ON storage.objects
+  FOR SELECT USING (bucket_id = 'members');
+
+CREATE POLICY "Authenticated users can upload member logos" ON storage.objects
+  FOR INSERT WITH CHECK (bucket_id = 'members' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can update member logos" ON storage.objects
+  FOR UPDATE USING (bucket_id = 'members' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can delete member logos" ON storage.objects
+  FOR DELETE USING (bucket_id = 'members' AND auth.role() = 'authenticated');
 
 -- Insert sample data
 INSERT INTO events (title, description, date, location, image_url) VALUES
