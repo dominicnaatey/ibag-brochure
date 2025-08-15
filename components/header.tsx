@@ -24,16 +24,11 @@ export function Header() {
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
-              {/* Italian flag colors as accent */}
-              <div className="flex space-x-1">
-                <div className="w-1 h-8 bg-green-600 rounded-sm"></div>
-                <div className="w-1 h-8 bg-white border border-gray-200 rounded-sm"></div>
-                <div className="w-1 h-8 bg-red-600 rounded-sm"></div>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-800">IBAG</h1>
-                <p className="text-xs text-gray-600 leading-tight">Italian Business Association</p>
-              </div>
+              <img 
+                src="/ibag_logo.png" 
+                alt="IBAG Logo" 
+                className="h-12 w-auto"
+              />
             </div>
           </Link>
 

@@ -9,15 +9,11 @@ export function Footer() {
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="flex space-x-1">
-                <div className="w-1 h-8 bg-green-600 rounded-sm"></div>
-                <div className="w-1 h-8 bg-white rounded-sm"></div>
-                <div className="w-1 h-8 bg-red-600 rounded-sm"></div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">IBAG</h3>
-                <p className="text-sm text-gray-300">Italian Business Association of Ghana</p>
-              </div>
+              <img 
+                src="/ibag_logo.png" 
+                alt="IBAG Logo" 
+                className="h-16 w-auto"
+              />
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
               Proudly bridging cultures and opportunities. Fostering collaboration, innovation, and growth among

@@ -17,16 +17,28 @@ export const metadata: Metadata = {
   keywords:
     "Italian Business Association, Ghana, IBAG, Italian companies Ghana, business networking, trade, investment",
   authors: [{ name: "IBAG Communications Team" }],
+  icons: {
+    icon: '/ibag_logo.ico',
+    shortcut: '/ibag_logo.ico',
+    apple: '/ibag_logo.png',
+  },
   openGraph: {
     title: "Italian Business Association of Ghana - IBAG",
     description: "Connecting Italian Heritage to Ghana's Business Landscape",
     type: "website",
     locale: "en_US",
+    images: [{
+      url: '/ibag_logo.png',
+      width: 1200,
+      height: 630,
+      alt: 'IBAG - Italian Business Association of Ghana',
+    }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Italian Business Association of Ghana - IBAG",
     description: "Connecting Italian Heritage to Ghana's Business Landscape",
+    images: ['/ibag_logo.png'],
   },
 }
 

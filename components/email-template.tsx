@@ -43,7 +43,7 @@ export const ContactEmail = ({
       <Container style={container}>
         <Section style={logoContainer}>
           <Img
-            src={`${baseUrl}/placeholder-logo.svg`}
+            src={`${baseUrl}/ibag_logo.png`}
             width="120"
             height="60"
             alt="IBAG Ghana"
@@ -85,7 +85,7 @@ export const ContactEmail = ({
           <Row style={footerLogos}>
             <Column style={{ width: '66%' }}>
               <Img
-                src={`${baseUrl}/placeholder-logo.svg`}
+                src={`${baseUrl}/ibag_logo.png`}
                 width="120"
                 height="60"
                 alt="IBAG Ghana"
