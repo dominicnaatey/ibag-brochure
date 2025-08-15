@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, Calendar, User, Share2 } from "lucide-react"
+import { ArrowLeft, Calendar, User, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { newsService } from "@/lib/supabase-service"
@@ -17,6 +17,12 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   if (!article) {
     notFound()
   }
+
+  // Get related articles
+  const allNews = await newsService.getAll()
+  const relatedArticles = allNews
+    .filter((item) => item.id !== article.id)
+    .slice(0, 2)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
