@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { newsService } from "@/lib/supabase-service"
 import type { Database } from "@/lib/supabase"
 import { Plus, Edit, Trash2, Eye, Calendar, User } from "lucide-react"
+import { TinyMCEEditor } from '@/components/tinymce-editor'
 
 type NewsArticle = Database['public']['Tables']['news']['Row']
 type NewsInsert = Database['public']['Tables']['news']['Insert']
@@ -305,13 +306,11 @@ function NewsForm({
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Content *</label>
-        <textarea
-          rows={8}
-          required
+        <TinyMCEEditor
           value={formData.content || ""}
-          onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-          placeholder="Full article content..."
+          onChange={(content) => setFormData({ ...formData, content })}
+          height={500}
+          placeholder="Write your article content here..."
         />
       </div>
 
