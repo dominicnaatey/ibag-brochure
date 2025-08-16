@@ -15,7 +15,7 @@ export function TinyMCEEditor({ value, onChange, height = 400, placeholder }: Ti
 
   return (
     <Editor
-      apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+      apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_TOKEN}
       onInit={(evt, editor) => editorRef.current = editor}
       initialValue={value}
       init={{
