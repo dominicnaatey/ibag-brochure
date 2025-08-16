@@ -76,9 +76,11 @@ export default function HomePage() {
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold text-gray-800 mb-6">Welcome to IBAG</h2>
               <p className="text-lg text-gray-600 leading-relaxed">
-                The Italian Business Association of Ghana serves as a bridge between Italian heritage and Ghana's
-                dynamic business environment. We bring together entrepreneurs, professionals, and organizations to
-                create meaningful connections and drive economic growth.
+                Registered in June 2015, The Italian Business Association of Ghana continuously aspires 
+                to create a platform which yields cultural, economic and trading partnerships between Italy 
+                and Ghana, but not limited to Ghanaian or Italian members. IBAG’s members constitute leading 
+                industry players whose business activities span across varied disciplines; from shipping and 
+                construction to hospitality and food service.
               </p>
             </div>
           </div>
@@ -87,6 +89,9 @@ export default function HomePage() {
         {/* Features Grid */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">JOIN OUR INTERNATIONAL BUSINESS COMMUNITY</h2>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-6 group hover:transform hover:scale-105 transition-all duration-300">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
