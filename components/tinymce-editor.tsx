@@ -2,6 +2,7 @@
 
 import { Editor } from '@tinymce/tinymce-react'
 import { useRef } from 'react'
+import type { Editor as TinyMCEEditor } from 'tinymce'
 
 interface TinyMCEEditorProps {
   value: string
@@ -34,7 +35,7 @@ export function TinyMCEEditor({ value, onChange, height = 400, placeholder }: Ti
         placeholder: placeholder,
         branding: false,
         promotion: false,
-        setup: (editor) => {
+        setup: (editor: TinyMCEEditor) => {
           editor.on('change', () => {
             onChange(editor.getContent())
           })
