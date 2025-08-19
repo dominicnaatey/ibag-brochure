@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { HeroSection } from "@/components/hero-section";
 import { motion } from "framer-motion";
 
 export default function HomePage() {
@@ -27,49 +28,7 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-gray-50 to-gray-100 py-20">
-          <div className="container mx-auto px-4 text-center">
-            <motion.div
-              className="max-w-4xl mx-auto"
-              variants={staggerContainer}
-              initial="initial"
-              animate="animate"
-            >
-              <motion.h1
-                className="text-4xl md:text-6xl font-bold text-gray-800 mb-6"
-                variants={fadeInUp}
-              >
-                Connecting Italian Heritage to Ghana's Business Landscape
-              </motion.h1>
-              <motion.p
-                className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
-                variants={fadeInUp}
-              >
-                Fostering collaboration, innovation, and growth among businesses
-                rooted in Italian culture.
-              </motion.p>
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-                variants={fadeInUp}
-              >
-                <motion.button
-                  className="bg-gray-800 hover:bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Join Us Today
-                </motion.button>
-                <motion.button
-                  className="border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Learn More
-                </motion.button>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
+        <HeroSection />
 
         {/* Welcome Section */}
         <section className="py-16">
@@ -82,7 +41,7 @@ export default function HomePage() {
                 Registered in June 2015, The Italian Business Association of
                 Ghana continuously aspires to create a platform which yields
                 cultural, economic and trading partnerships between Italy and
-                Ghana, but not limited to Ghanaian or Italian members. IBAG’s
+                Ghana, but not limited to Ghanaian or Italian members. IBAG's
                 members constitute leading industry players whose business
                 activities span across varied disciplines; from shipping and
                 construction to hospitality and food service.
@@ -198,6 +157,7 @@ export default function HomePage() {
       </main>
 
       <Footer />
+      <NewsletterSignup />
       <ScrollToTop />
     </div>
   );
