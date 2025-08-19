@@ -88,7 +88,7 @@ export function HeroSection() {
               <Image
                 src="/eurocham_logo.png"
                 alt="EuroCham Ghana Logo"
-                width={100}
+                width={110}
                 height={0}
                 className="object-contain h-auto"
               />
