@@ -26,11 +26,11 @@ export function HeroSection() {
   };
 
   const carouselImages = [
-    "/italian-business-meeting.png",
-    "/italian-food-festival.png",
-    "/italian-ghanaian-event.png",
-    "/italian-wine-networking.png",
-    "/business-workshop.png",
+    "/italian-business-meeting.jpg",
+    "/italian-food-festival.jpg",
+    "/italian-ghanaian-event.jpg",
+    "/italian-wine-networking.jpg",
+    "/business-workshop.jpg",
   ];
 
   return (
@@ -86,7 +86,7 @@ export function HeroSection() {
                 We are a member of EuroCham
               </span>
               <Image
-                src="/eurocham_logo.png"
+                src="/eurocham_logo.jpg"
                 alt="EuroCham Ghana Logo"
                 width={110}
                 height={0}
