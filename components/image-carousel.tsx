@@ -10,7 +10,7 @@ interface ImageCarouselProps {
   interval?: number;
 }
 
-export function ImageCarousel({ images, autoPlay = true, interval = 10000 }: ImageCarouselProps) {
+export function ImageCarousel({ images, autoPlay = true, interval = 5000 }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export function ImageCarousel({ images, autoPlay = true, interval = 10000 }: Ima
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ 
-            duration: 0.8,
+            duration: 1.2,
             ease: "easeInOut"
           }}
           className="absolute inset-0 w-full h-full"
