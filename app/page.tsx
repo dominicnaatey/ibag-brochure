@@ -198,7 +198,6 @@ export default function HomePage() {
       </main>
 
       <Footer />
-      <NewsletterSignup />
       <ScrollToTop />
     </div>
   );
