@@ -86,7 +86,7 @@ export function HeroSection() {
                 We are a member of EuroCham
               </span>
               <Image
-                src="/eurocham_logo.jpg"
+                src="/eurocham_logo.png"
                 alt="EuroCham Ghana Logo"
                 width={110}
                 height={0}
