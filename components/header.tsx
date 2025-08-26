@@ -2,11 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   const navigationItems = [
     { name: "Home", href: "/" },
@@ -16,6 +18,13 @@ export function Header() {
     { name: "IBAG News", href: "/news" },
     { name: "Contact", href: "/contact" },
   ]
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/"
+    }
+    return pathname.startsWith(href)
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -38,7 +47,11 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  isActive(item.href)
+                    ? "text-red-600"
+                    : "text-gray-700 hover:text-red-600"
+                }`}
               >
                 {item.name}
               </Link>
@@ -47,7 +60,8 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex">
-            <Button className="bg-gray-800 hover:bg-purple-600 text-white transition-colors duration-200">
+            <Button className="bg-gray-800 hover:bg-red-500 text-white transition-colors duration-200">
+
               Join Us Today
             </Button>
           </div>
@@ -66,13 +80,18 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-base font-medium text-gray-700 hover:text-purple-600 transition-colors duration-200"
+                  className={`text-base font-medium transition-colors duration-200 ${
+                    isActive(item.href)
+                      ? "text-red-700"
+                      : "text-gray-700 hover:text-red-600"
+
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              <Button className="bg-gray-800 hover:bg-purple-600 text-white transition-colors duration-200 mt-4">
+              <Button className="bg-gray-800 hover:bg-italian-green text-white transition-colors duration-200 mt-4">
                 Join Us Today
               </Button>
             </nav>
