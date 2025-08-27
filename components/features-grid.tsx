@@ -1,6 +1,6 @@
 export function FeaturesGrid() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-20 bg-gradient-to-br from-green-50 to-green-100">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="text-center mb-12">
           <span className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1 text-sm font-medium mb-4 text-gray-600">
@@ -11,7 +11,7 @@ export function FeaturesGrid() {
             Join Our International Business Community
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <div className="text-center p-8 bg-white rounded-lg border border-gray-200 shadow-sm group hover:shadow-md transition-all duration-300">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
