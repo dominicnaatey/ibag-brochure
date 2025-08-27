@@ -1,10 +1,10 @@
 export function WelcomeSection() {
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 md:px-8 lg:px-16">
+      <div className="container max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           {/* Left Column */}
-          <div>
+          <div className="">
             <span className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1 text-sm font-medium mb-4 text-gray-600">
               <span className="w-2 h-2 bg-gray-800 rounded-full mr-2"></span>
               Who we are
