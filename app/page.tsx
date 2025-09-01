@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { HeroSection } from "@/components/hero-section";
+import { HeroSection2 } from "@/components/hero-section2";
 import { WelcomeSection } from "@/components/welcome-section";
 import { FeaturesGrid } from "@/components/features-grid";
 import { ActivitiesSection } from "@/components/activities-section";
@@ -31,7 +32,11 @@ export default function HomePage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <HeroSection />
+        <section className="py-16">
+          <div className=" mx-auto px-4">
+            <HeroSection2 />
+          </div>
+        </section>
 
         {/* Welcome Section */}
         <WelcomeSection />
@@ -40,7 +45,12 @@ export default function HomePage() {
         <FeaturesGrid />
 
         {/* IBAG Activities Section */}
-        <ActivitiesSection />
+        <section className="py-16">
+          <div className=" mx-auto px-4">
+            <ActivitiesSection />
+          </div>
+        </section>
+        
 
         {/* Newsletter Section */}
         <section className="py-16">
