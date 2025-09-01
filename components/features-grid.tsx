@@ -7,9 +7,9 @@ export function FeaturesGrid() {
             <span className="w-2 h-2 bg-gray-900 rounded-full mr-2"></span>
             Why Choose Us
           </span>
-          <h2 className="text-4xl md:text-5xl w-3xl mx-auto font-extrabold text-gray-900 leading-tight">
+          {/* <h2 className="text-4xl md:text-5xl w-3xl mx-auto font-extrabold text-gray-900 leading-tight">
             Join Our International Business Community
-          </h2>
+          </h2> */}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {/*  */}
