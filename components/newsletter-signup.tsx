@@ -40,10 +40,10 @@ export function NewsletterSignup() {
   }
 
   return (
-    <div className="bg-gray-800 rounded-lg p-8 text-center text-white">
-      <Mail className="h-12 w-12 text-purple-400 mx-auto mb-4" />
+    <div className="bg-white rounded-lg p-8 text-center text-gray-900">
+      <Mail className="h-12 w-12 text-green-400 mx-auto mb-4" />
       <h3 className="text-2xl font-bold mb-2">Stay Connected</h3>
-      <p className="text-gray-300 mb-6 max-w-md mx-auto">
+      <p className="text-gray-600 mb-6 max-w-md mx-auto">
         Subscribe to our newsletter and get the latest updates on events, news, and opportunities.
       </p>
 
@@ -55,12 +55,12 @@ export function NewsletterSignup() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
             required
-            className="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-600"
+            className="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-600"
           />
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium disabled:opacity-50"
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium disabled:opacity-50"
           >
             {isLoading ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
