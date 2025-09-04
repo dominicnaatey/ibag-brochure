@@ -1,0 +1,148 @@
+import { Button } from "@/components/ui/button"
+
+export default function FeaturesGrid2() {
+  return (
+    <section className="shadow-lg rounded-3xl md:rounded-4xl bg-white">
+      {/* Approach */}
+      <div className="max-w-7xl px-4 xl:px-0 py-10 lg:pt-20 lg:pb-20 mx-auto">
+        {/* Title */}
+        {/* <div className="mb-10 lg:mb-14">
+          <h2 className="text-4xl text-center md:text-5xl w-3xl mx-auto font-extrabold text-gray-50 leading-tight">
+            Join Our International Business Community
+          </h2>
+          <p className="mt-1 text-neutral-400">
+            This profound insight guides our comprehensive strategy — from
+            meticulous research and strategic planning to the seamless execution
+            of business development and community building between Italy and
+            Ghana.
+          </p>
+        </div> */}
+        {/* End Title */}
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 lg:items-center">
+          <div className="aspect-w-16 aspect-h-9 lg:aspect-none">
+            <img
+              loading="lazy"
+              className="relative h-96 lg:h-[650px] w-full object-cover rounded-2xl"
+              src="/features-image.jpg"
+              alt="IBAG Business Approach"
+            />
+          </div>
+          {/* End Col */}
+
+          {/* Timeline */}
+
+          <div>
+            <span className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1 text-sm font-medium mb-4 text-gray-600">
+              <span className="w-2 h-2 bg-gray-600 rounded-full mr-2"></span>
+             Why Join Us
+            </span>
+            <div className="mb-8">
+              <h2 className="text-3xl md:text-4xl mx-auto font-extrabold text-gray-800 leading-tight">
+                Join Our International Business Community
+              </h2>
+            </div>
+
+            {/* Heading */}
+            {/* <div className="mb-4">
+              <h3 className="text-[#ff0] text-xs font-medium uppercase">
+                Steps
+              </h3>
+            </div> */}
+            {/* End Heading */}
+
+            {/* Item 1 */}
+            <div className="flex gap-x-5 ms-1">
+              {/* Icon */}
+              <div className="relative last:after:hidden after:absolute after:top-8 after:bottom-0 after:start-4 after:w-px after:-translate-x-[0.5px] after:bg-neutral-800">
+                <div className="relative z-10 size-8 flex justify-center items-center">
+                  <span className="flex shrink-0 justify-center items-center size-8 border border-gray-500 text-red-600 font-semibold text-xs uppercase rounded-full">
+                    1
+                  </span>
+                </div>
+              </div>
+              {/* End Icon */}
+
+              {/* Right Content */}
+              <div className="grow pt-0.5 pb-8 sm:pb-12">
+                <p className="text-sm lg:text-base text-neutral-600">
+                  <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight">
+                    Network
+                  </h3>
+                  Land your next contract or expand your clientele base during
+                  our social and business events. IBAG is strategically
+                  positioned to advance your business's network and net worth.
+                </p>
+              </div>
+              {/* End Right Content */}
+            </div>
+            {/* End Item */}
+
+            {/* Item 2 */}
+            <div className="flex gap-x-5 ms-1">
+              {/* Icon */}
+              <div className="relative last:after:hidden after:absolute after:top-8 after:bottom-0 after:start-4 after:w-px after:-translate-x-[0.5px] after:bg-neutral-800">
+                <div className="relative z-10 size-8 flex justify-center items-center">
+                  <span className="flex shrink-0 justify-center items-center size-8 border border-gray-600 text-red-500 font-semibold text-xs uppercase rounded-full">
+                    2
+                  </span>
+                </div>
+              </div>
+              {/* End Icon */}
+
+              {/* Right Content */}
+              <div className="grow pt-0.5 pb-8 sm:pb-12">
+                <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight">
+                  Collaborate
+                </h3>
+                <p className="text-sm lg:text-base text-neutral-600">
+                  We celebrate Italian culture periodically to create local
+                  awareness of Italian festivities and customs as well as to
+                  provide a sense of belonging to home-sick Italians living in
+                  Ghana.
+                </p>
+              </div>
+              {/* End Right Content */}
+            </div>
+            {/* End Item */}
+
+            {/* Item 3 */}
+            <div className="flex gap-x-5 ms-1">
+              {/* Icon */}
+              <div className="relative last:after:hidden after:absolute after:top-8 after:bottom-0 after:start-4 after:w-px after:-translate-x-[0.5px] after:bg-neutral-800">
+                <div className="relative z-10 size-8 flex justify-center items-center">
+                  <span className="flex shrink-0 justify-center items-center size-8 border border-gray-600 text-red-500 font-semibold text-xs uppercase rounded-full">
+                    3
+                  </span>
+                </div>
+              </div>
+              {/* End Icon */}
+
+              {/* Right Content */}
+              <div className="grow pt-0.5 pb-8 sm:pb-12">
+                <p className="text-sm md:text-base text-neutral-600">
+                  <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight">
+                    Support
+                  </h3>
+                  From time to time, we bring our members together informally by
+                  hosting 'Aperitivo' sessions and dinners to build and harness
+                  stronger inter-member connections and business relations.
+                </p>
+              </div>
+              {/* End Right Content */}
+            </div>
+
+            {/* End Item */}
+
+            <Button className="bg-gray-800 hover:bg-red-500 text-white transition-colors duration-200">
+              Join Us Today
+            </Button>
+          </div>
+          {/* End Timeline */}
+        </div>
+        {/* End Grid */}
+      </div>
+    </section>
+  );
+}
