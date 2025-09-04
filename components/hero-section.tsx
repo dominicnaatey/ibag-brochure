@@ -34,7 +34,7 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-20 rounded-3xl md:rounded-4xl shadow-md">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Content - Left Side */}
