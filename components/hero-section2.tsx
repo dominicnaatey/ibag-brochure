@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export function HeroSection2() {
@@ -8,7 +9,7 @@ export function HeroSection2() {
     <section className="relative w-full h-[70vh] lg:h-[80vh] overflow-hidden rounded-4xl">
       {/* Background Image */}
       <Image
-        src="/italian-business-meeting.jpg"
+        src="/hero2-bg.jpg"
         alt="IBAG Hero Background"
         fill
         className="object-cover"
@@ -16,10 +17,10 @@ export function HeroSection2() {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90"></div>
 
       {/* Content */}
-      <div className="absolute bottom-16 left-0 right-0 text-white">
+      <div className="absolute bottom-16 left-0 right-0 ">
         <div className="container max-w-7xl mx-auto px-4">
           <motion.div
             className="max-w-7xl mx-auto"
@@ -27,8 +28,8 @@ export function HeroSection2() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              Building Bridges Between <br /> Italy and Ghana
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-50 leading-tight mb-6">
+              Building Bridges Between Italy and Ghana
             </h1>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
               <p className="text-xl md:text-2xl text-gray-100 max-w-2xl flex-1">
@@ -36,7 +37,13 @@ export function HeroSection2() {
               </p>
 
               {/* CTA Button */}
-              <motion.button
+              <div className="hidden md:flex">
+                <Button className="bg-gray-100 hover:bg-red-500 text-white transition-colors duration-200">
+                  Join Us Today
+                </Button>
+              </div>
+
+              {/* <motion.button
                 className="inline-flex items-center gap-3 bg-white text-red-600 pl-[10px] pr-[15px] py-3 rounded-full font-semibold text-base shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden"
                 whileHover="hover"
                 initial="initial"
@@ -44,9 +51,9 @@ export function HeroSection2() {
                   initial: {},
                   hover: {}
                 }}
-              >
-                {/* Sliding circular icon */}
-                <motion.div 
+              > */}
+              {/* Sliding circular icon */}
+              {/* <motion.div 
                   className="w-[35px] h-[35px] bg-red-500 rounded-full flex items-center justify-center z-10 relative"
                   variants={{
                     initial: { x: 0 },
@@ -57,10 +64,10 @@ export function HeroSection2() {
                   <svg className="w-[18px] h-[18px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
-                </motion.div>
-                
-                {/* Text that fades out and reappears on the right */}
-                  <div className="relative flex-1">
+                </motion.div> */}
+
+              {/* Text that fades out and reappears on the right */}
+              {/* <div className="relative flex-1">
                     <motion.span
                        className="inline-block whitespace-nowrap"
                        variants={{
@@ -93,8 +100,8 @@ export function HeroSection2() {
                        >
                          Join Us Today
                        </motion.span>
-                  </div>
-              </motion.button>
+                  </div> */}
+              {/* </motion.button> */}
             </div>
           </motion.div>
         </div>
