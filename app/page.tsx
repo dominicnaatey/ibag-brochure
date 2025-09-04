@@ -8,6 +8,7 @@ import { HeroSection } from "@/components/hero-section";
 import { HeroSection2 } from "@/components/hero-section2";
 import { WelcomeSection } from "@/components/welcome-section";
 import { FeaturesGrid } from "@/components/features-grid";
+import FeaturesGrid2 from "@/components/features-grid2";
 import { ActivitiesSection } from "@/components/activities-section";
 import { motion } from "framer-motion";
 
@@ -27,25 +28,33 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-100">
       <Header />
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="py-16">
-          <div className=" mx-auto px-4">
+        <section className="">
+          <div className=" mx-auto px-8">
             <HeroSection2 />
           </div>
         </section>
 
         {/* Welcome Section */}
-        <WelcomeSection />
+        <section>
+          <div className="mx-auto px-4">
+            <WelcomeSection />
+          </div>
+        </section>
 
         {/* Features Grid */}
-        <FeaturesGrid />
+        <section>
+          <div className="mx-auto px-8">
+            <FeaturesGrid2 />
+          </div>
+        </section>
 
         {/* IBAG Activities Section */}
-        <section className="py-16">
+        <section className="">
           <div className=" mx-auto px-4">
             <ActivitiesSection />
           </div>
@@ -54,7 +63,7 @@ export default function HomePage() {
 
         {/* Newsletter Section */}
         <section className="py-16">
-          <div className="container mx-auto px-4">
+          <div className="mx-auto px-4">
             <NewsletterSignup />
           </div>
         </section>
