@@ -1,4 +1,33 @@
+import React from 'react';
 import { Button } from "@/components/ui/button"
+
+interface TimelineItemProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  isLast?: boolean;
+}
+
+const TimelineItem: React.FC<TimelineItemProps> = ({ icon, title, description, isLast = false }) => {
+  return (
+    <div className="flex gap-4">
+      <div className="flex flex-col items-center">
+        <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center">
+          {icon}
+        </div>
+        {!isLast && <div className="w-px h-16 bg-gray-300 mt-2"></div>}
+      </div>
+      <div className="pb-8">
+        <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight mb-2">
+          {title}
+        </h3>
+        <p className="text-sm lg:text-base text-neutral-600">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+};
 
 export default function FeaturesGrid2() {
   return (
@@ -52,88 +81,24 @@ export default function FeaturesGrid2() {
             </div> */}
             {/* End Heading */}
 
-            {/* Item 1 */}
-            <div className="flex gap-x-5 ms-1">
-              {/* Icon */}
-              <div className="relative last:after:hidden after:absolute after:top-8 after:bottom-0 after:start-4 after:w-px after:-translate-x-[0.5px] after:bg-neutral-800">
-                <div className="relative z-10 size-8 flex justify-center items-center">
-                  <span className="flex shrink-0 justify-center items-center size-8 border border-gray-500 text-red-600 font-semibold text-xs uppercase rounded-full">
-                    1
-                  </span>
-                </div>
-              </div>
-              {/* End Icon */}
+            <TimelineItem
+               icon={<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>}
+               title="Network"
+               description="Land your next contract or expand your clientele base during our social and business events. IBAG is strategically positioned to advance your business's network and net worth."
+             />
 
-              {/* Right Content */}
-              <div className="grow pt-0.5 pb-8 sm:pb-12">
-                <p className="text-sm lg:text-base text-neutral-600">
-                  <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight">
-                    Network
-                  </h3>
-                  Land your next contract or expand your clientele base during
-                  our social and business events. IBAG is strategically
-                  positioned to advance your business's network and net worth.
-                </p>
-              </div>
-              {/* End Right Content */}
-            </div>
-            {/* End Item */}
+             <TimelineItem
+               icon={<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>}
+               title="Collaborate"
+               description="We celebrate Italian culture periodically to create local awareness of Italian festivities and customs as well as to provide a sense of belonging to home-sick Italians living in Ghana."
+             />
 
-            {/* Item 2 */}
-            <div className="flex gap-x-5 ms-1">
-              {/* Icon */}
-              <div className="relative last:after:hidden after:absolute after:top-8 after:bottom-0 after:start-4 after:w-px after:-translate-x-[0.5px] after:bg-neutral-800">
-                <div className="relative z-10 size-8 flex justify-center items-center">
-                  <span className="flex shrink-0 justify-center items-center size-8 border border-gray-600 text-red-500 font-semibold text-xs uppercase rounded-full">
-                    2
-                  </span>
-                </div>
-              </div>
-              {/* End Icon */}
-
-              {/* Right Content */}
-              <div className="grow pt-0.5 pb-8 sm:pb-12">
-                <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight">
-                  Collaborate
-                </h3>
-                <p className="text-sm lg:text-base text-neutral-600">
-                  We celebrate Italian culture periodically to create local
-                  awareness of Italian festivities and customs as well as to
-                  provide a sense of belonging to home-sick Italians living in
-                  Ghana.
-                </p>
-              </div>
-              {/* End Right Content */}
-            </div>
-            {/* End Item */}
-
-            {/* Item 3 */}
-            <div className="flex gap-x-5 ms-1">
-              {/* Icon */}
-              <div className="relative last:after:hidden after:absolute after:top-8 after:bottom-0 after:start-4 after:w-px after:-translate-x-[0.5px] after:bg-neutral-800">
-                <div className="relative z-10 size-8 flex justify-center items-center">
-                  <span className="flex shrink-0 justify-center items-center size-8 border border-gray-600 text-red-500 font-semibold text-xs uppercase rounded-full">
-                    3
-                  </span>
-                </div>
-              </div>
-              {/* End Icon */}
-
-              {/* Right Content */}
-              <div className="grow pt-0.5 pb-8 sm:pb-12">
-                <p className="text-sm md:text-base text-neutral-600">
-                  <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight">
-                    Support
-                  </h3>
-                  From time to time, we bring our members together informally by
-                  hosting 'Aperitivo' sessions and dinners to build and harness
-                  stronger inter-member connections and business relations.
-                </p>
-              </div>
-              {/* End Right Content */}
-            </div>
-
-            {/* End Item */}
+             <TimelineItem
+               icon={<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/></svg>}
+               title="Support"
+               description="From time to time, we bring our members together informally by hosting 'Aperitivo' sessions and dinners to build and harness stronger inter-member connections and business relations."
+               isLast={true}
+             />
 
             <Button className="bg-gray-800 hover:bg-red-500 text-white transition-colors duration-200">
               Join Us Today
