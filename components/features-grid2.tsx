@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Users, Handshake, MessagesSquare } from 'lucide-react';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Users, Handshake, MessagesSquare } from "lucide-react";
 
 interface TimelineItemProps {
   icon: React.ReactNode;
@@ -9,7 +9,12 @@ interface TimelineItemProps {
   isLast?: boolean;
 }
 
-const TimelineItem: React.FC<TimelineItemProps> = ({ icon, title, description, isLast = false }) => {
+const TimelineItem: React.FC<TimelineItemProps> = ({
+  icon,
+  title,
+  description,
+  isLast = false,
+}) => {
   return (
     <div className="flex gap-4">
       <div className="flex flex-col items-center">
@@ -22,9 +27,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ icon, title, description, i
         <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight mb-2">
           {title}
         </h3>
-        <p className="text-sm lg:text-base text-neutral-600">
-          {description}
-        </p>
+        <p className="text-sm lg:text-base text-neutral-600">{description}</p>
       </div>
     </div>
   );
@@ -64,9 +67,9 @@ export default function FeaturesGrid2() {
           {/* Timeline */}
 
           <div>
-            <span className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1 text-sm font-medium mb-4 text-gray-600">
-              <span className="w-2 h-2 bg-gray-600 rounded-full mr-2"></span>
-             Why Join Us
+            <span className="inline-flex items-center shadow-inner backdrop-blur-md bg-white/20 border border-white/30 rounded-full px-4 py-1 text-sm font-medium mb-4 text-gray-700">
+              <span className="w-2 h-2 bg-gray-700 rounded-full mr-2"></span>
+              Why Join Us
             </span>
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl mx-auto font-extrabold text-gray-800 leading-tight">
@@ -83,25 +86,28 @@ export default function FeaturesGrid2() {
             {/* End Heading */}
 
             <TimelineItem
-                icon={<Users className="w-4 h-4" />}
-                title="Network"
-                description="Land your next contract or expand your clientele base during our social and business events. IBAG is strategically positioned to advance your business's network and net worth."
-              />
+              icon={<Users className="w-4 h-4" />}
+              title="Network"
+              description="Land your next contract or expand your clientele base during our social and business events. IBAG is strategically positioned to advance your business's network and net worth."
+            />
 
-              <TimelineItem
-                icon={<Handshake className="w-4 h-4" />}
-                title="Collaborate"
-                description="We celebrate Italian culture periodically to create local awareness of Italian festivities and customs as well as to provide a sense of belonging to home-sick Italians living in Ghana."
-              />
-  
-               <TimelineItem
-                 icon={<MessagesSquare className="w-4 h-4" />}
-                 title="Support"
-                 description="From time to time, we bring our members together informally by hosting 'Aperitivo' sessions and dinners to build and harness stronger inter-member connections and business relations."
-                 isLast={true}
-               />
+            <TimelineItem
+              icon={<Handshake className="w-4 h-4" />}
+              title="Collaborate"
+              description="We celebrate Italian culture periodically to create local awareness of Italian festivities and customs as well as to provide a sense of belonging to home-sick Italians living in Ghana."
+            />
 
-            <Button className="bg-gray-800 hover:bg-red-500 text-white transition-colors duration-200">
+            <TimelineItem
+              icon={<MessagesSquare className="w-4 h-4" />}
+              title="Support"
+              description="From time to time, we bring our members together informally by hosting 'Aperitivo' sessions and dinners to build and harness stronger inter-member connections and business relations."
+              isLast={true}
+            />
+
+            {/* <LiquidButton className="text-gray-900 hover:text-red-500 h-10 w-30 hover:scale-100 hover:[&>div:first-child]:shadow-[inset_3px_3px_0.5px_-3px_rgba(239,68,68,0.9),inset_-3px_-3px_0.5px_-3px_rgba(239,68,68,0.85),inset_1px_1px_1px_-0.5px_rgba(239,68,68,0.6),inset_-1px_-1px_1px_-0.5px_rgba(239,68,68,0.6),inset_0_0_6px_6px_rgba(239,68,68,0.12),inset_0_0_2px_2px_rgba(239,68,68,0.06)] transition-all duration-300">
+              Join Us Today
+            </LiquidButton> */}
+            <Button className="bg-red-600 hover:bg-red-700 text-white h-10 w-30">
               Join Us Today
             </Button>
           </div>
