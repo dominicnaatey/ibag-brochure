@@ -40,10 +40,11 @@ export function NewsletterSignup() {
   }
 
   return (
-    <div className="bg-white rounded-lg p-8 text-center text-gray-900">
-      <Mail className="h-12 w-12 text-green-400 mx-auto mb-4" />
-      <h3 className="text-2xl font-bold mb-2">Stay Connected</h3>
-      <p className="text-gray-600 mb-6 max-w-md mx-auto">
+    <section className="bg-red-600 rounded-4xl p-8">
+      <div className=" text-center text-gray-900">
+      <Mail className="h-12 w-12 text-red-50 mx-auto mb-4" />
+      <h3 className="text-2xl text-gray-50 font-bold mb-2">Stay Connected</h3>
+      <p className="text-gray-100 mb-6 max-w-md mx-auto">
         Subscribe to our newsletter and get the latest updates on events, news, and opportunities.
       </p>
 
@@ -72,5 +73,7 @@ export function NewsletterSignup() {
         {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
       </form>
     </div>
+    </section>
+    
   )
 }
