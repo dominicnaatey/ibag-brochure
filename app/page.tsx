@@ -1,6 +1,5 @@
 "use client";
 
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { ScrollToTop } from "@/components/scroll-to-top";
@@ -29,12 +28,10 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Header />
-
       <main className="flex-1">
         {/* Hero Section */}
         <section className="">
-          <div className=" mx-auto px-8">
+          <div className=" mx-auto px-6 pt-6">
             <HeroSection2 />
           </div>
         </section>
