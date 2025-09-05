@@ -156,7 +156,7 @@ export function HeroSection2() {
                   className={`text-base transition-colors duration-200 ${
                     isActive(item.href)
                       ? "text-red-500 font-medium"
-                      : "text-gray-50 hover:text-red-600 font-light"
+                      : "text-gray-50 hover:text-red-500 font-light"
                   }`}
                 >
                   {item.name}
