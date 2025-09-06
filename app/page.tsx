@@ -29,7 +29,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F7F8F9]">
+    <div className="min-h-screen flex flex-col bg-gray-100">
       {/* <Header/> */}
       <main className="flex-1">
         {/* Hero Section */}
@@ -48,7 +48,7 @@ export default function HomePage() {
 
         {/* Features Grid */}
         <section>
-          <div className="mx-auto px-8">
+          <div className="cmx-auto px-8">
             <FeaturesGrid2 />
           </div>
         </section>
