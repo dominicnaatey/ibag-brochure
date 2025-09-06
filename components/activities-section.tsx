@@ -1,3 +1,7 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import {MicVocal, BriefcaseBusiness, Presentation, Drama, Wine, MessageCircle, Award, Heart } from 'lucide-react';
+
 export function ActivitiesSection() {
   return (
     <section className="py-20 rounded-4xl">
@@ -15,10 +19,8 @@ export function ActivitiesSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {/*  */}
           <div className="text-start p-8 bg-white rounded-md border border-gray-100 group hover:shadow-lg transition-all duration-300">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6">
+              <MicVocal className="w-16 h-16 text-gray-500" />
             </div>
             <h3 className="text-xl font-bold text-gray-700 mb-4">
               MONTHLY BUSINESS TALKS
@@ -28,25 +30,21 @@ export function ActivitiesSection() {
             </p>
           </div>
           {/*  */}
-          <div className=" p-8 bg-red-600 rounded-2xl border border-gray-200 shadow-sm group hover:shadow-md transition-all duration-300">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0A2.704 2.704 0 003 15.546V6.454c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0c.454.303.977.454 1.5.454v9.092zM9 12l2 2 4-4" />
-              </svg>
+          <div className=" p-8 bg-white rounded-2xl border group hover:shadow-lg transition-all duration-300">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6">
+              <Drama className="w-16 h-16 text-gray-600" />
             </div>
-            <h3 className="text-xl font-bold text-gray-50 mb-4">
+            <h3 className="text-xl font-bold text-gray-700 mb-4">
               ITALIAN CULTURAL CELEBRATIONS
             </h3>
-            <p className="text-gray-100 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed">
               We celebrate Italian culture periodically to create local awareness of Italian festivities and customs as well as to provide a sense of belonging to home-sick Italians living in Ghana.
             </p>
           </div>
           {/*  */}
-          <div className="text-center p-8 bg-white rounded-2xl border border-gray-200 shadow-sm group hover:shadow-md transition-all duration-300">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
+          <div className="text-start p-8 bg-white rounded-2xl border group hover:shadow-lg transition-all duration-300">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6">
+              <Wine className="w-16 h-16 text-gray-600" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-4">
               SOCIAL ENGAGEMENTS
