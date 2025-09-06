@@ -1,10 +1,12 @@
 "use client";
 
 import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { HeroSection } from "@/components/hero-section";
 import { HeroSection2 } from "@/components/hero-section2";
+import { HeroSection3 } from "@/components/hero-section3";
 import { WelcomeSection } from "@/components/welcome-section";
 import { FeaturesGrid } from "@/components/features-grid";
 import FeaturesGrid2 from "@/components/features-grid2";
@@ -27,11 +29,12 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="min-h-screen flex flex-col bg-[#F7F8F9]">
+      {/* <Header/> */}
       <main className="flex-1">
         {/* Hero Section */}
         <section className="">
-          <div className=" mx-auto px-6 pt-6">
+          <div className=" mx-auto px-4 pt-4">
             <HeroSection2 />
           </div>
         </section>
