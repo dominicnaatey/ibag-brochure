@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { LiquidButton } from "@/components/liquid-glass-button";
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 export function HeroSection2() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,8 +21,8 @@ export function HeroSection2() {
       setIsScrolled(window.scrollY > heroHeight * 0.8);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navigationItems = [
@@ -32,35 +32,37 @@ export function HeroSection2() {
     { name: "Events & Gallery", href: "/events-gallery" },
     { name: "IBAG News", href: "/news" },
     { name: "Contact", href: "/contact" },
-  ]
+  ];
 
   const isActive = (href: string) => {
     if (href === "/") {
-      return pathname === "/"
+      return pathname === "/";
     }
-    return pathname.startsWith(href)
-  }
+    return pathname.startsWith(href);
+  };
 
   return (
     <>
       {/* Fixed Header - appears after scrolling */}
-      <header className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        isScrolled 
-          ? 'translate-y-0 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b shadow-sm' 
-          : '-translate-y-full bg-transparent'
-      }`}>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+          isScrolled
+            ? "translate-y-0 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b shadow-sm"
+            : "-translate-y-full bg-transparent"
+        }`}
+      >
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo and Brand */}
-             <Link href="/" className="flex items-center space-x-3">
-               <div className="flex items-center space-x-2">
-                 <img 
-                   src="/ibag_logo.png" 
-                   alt="IBAG Logo" 
-                   className="h-12 w-auto"
-                 />
-               </div>
-             </Link>
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
+                <img
+                  src="/ibag_logo.png"
+                  alt="IBAG Logo"
+                  className="h-12 w-auto"
+                />
+              </div>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
@@ -80,15 +82,23 @@ export function HeroSection2() {
             </nav>
 
             {/* CTA Button */}
-             <div className="hidden md:flex">
-               <Button className="bg-gray-800 hover:bg-red-500 text-white transition-colors duration-200">
-                 Join Us Today
-               </Button>
-             </div>
+            <div className="hidden md:flex">
+              <Button className="bg-gray-800 hover:bg-red-500 text-white transition-colors duration-200">
+                Join Us Today
+              </Button>
+            </div>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
-              {isMenuOpen ? <X className="h-6 w-6 text-gray-700" /> : <Menu className="h-6 w-6 text-gray-700" />}
+            <button
+              className="md:hidden p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6 text-gray-700" />
+              ) : (
+                <Menu className="h-6 w-6 text-gray-700" />
+              )}
             </button>
           </div>
 
@@ -111,15 +121,15 @@ export function HeroSection2() {
                   </Link>
                 ))}
                 <Button className="bg-gray-800 hover:bg-italian-green text-white transition-colors duration-200 mt-4">
-                   Join Us Today
-                 </Button>
+                  Join Us Today
+                </Button>
               </nav>
             </div>
           )}
         </div>
       </header>
 
-      <section className="relative w-full h-[70vh] lg:h-[92vh] overflow-hidden rounded-4xl">
+      <section className="relative w-full h-[70vh] lg:h-[97vh] overflow-hidden rounded-4xl">
         {/* Background Image */}
         <Image
           src="/hero2-bg.jpg"
@@ -132,108 +142,119 @@ export function HeroSection2() {
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90"></div>
 
-      {/* Hero Navigation Header - scrolls with hero */}
-      <header className="absolute top-0 left-0 right-0 z-50 w-full bg-transparent">
-        <div className="container mx-auto px-4 pt-8">
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo and Brand */}
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2">
-                <img 
-                   src="/ibag_logo.png" 
-                   alt="IBAG Logo" 
-                   className="h-16 w-auto"
-                 />
-              </div>
-            </Link>
+        {/* Hero Navigation Header - scrolls with hero */}
+        <header className="absolute top-0 left-0 right-0 z-50 w-full bg-transparent">
+          <div className="container mx-auto px-4 pt-8">
+            <div className="flex h-16 items-center justify-between">
+              {/* Logo and Brand */}
+              <Link href="/" className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
+                  <img
+                    src="/ibag_logo.png"
+                    alt="IBAG Logo"
+                    className="h-16 w-auto"
+                  />
+                </div>
+              </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-base transition-colors duration-200 ${
-                    isActive(item.href)
-                      ? "text-red-500 font-medium"
-                      : "text-gray-50 hover:text-red-500 font-light"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-
-            {/* CTA Button */}
-            <div className="hidden md:flex">
-              <Button className="bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 text-white transition-all duration-200">
-                Join Us Today
-              </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
-               {isMenuOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
-            </button>
-          </div>
-
-          {/* Mobile Navigation */}
-           {isMenuOpen && (
-             <div className="md:hidden bg-black/80 backdrop-blur-md border-t border-white/20">
-              <nav className="flex flex-col space-y-4 px-4 py-6">
+              {/* Desktop Navigation */}
+              <nav className="hidden md:flex items-center space-x-8">
                 {navigationItems.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`text-base font-medium transition-colors duration-200 ${
-                       isActive(item.href)
-                         ? "text-white"
-                         : "text-gray-200 hover:text-white"
-                     }`}
-                    onClick={() => setIsMenuOpen(false)}
+                    className={`text-base transition-colors duration-200 ${
+                      isActive(item.href)
+                        ? "text-red-500 font-medium"
+                        : "text-gray-50 hover:text-red-500 font-light"
+                    }`}
                   >
                     {item.name}
                   </Link>
                 ))}
-                <Button className="bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 text-white transition-all duration-200 mt-4">
-                  Join Us Today
-                </Button>
               </nav>
-            </div>
-          )}
-        </div>
-      </header>
-
-      {/* Content */}
-      <div className="absolute bottom-16 left-0 right-0 ">
-        <div className="container max-w-8xl mx-auto px-4">
-          <motion.div
-            className="max-w-8xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold text-gray-100 leading-tight mb-6 justify-between">
-              Building Bridges Between<br/> Italy and Ghana
-            </h1>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
-              <p className="text-xl md:text-2xl text-gray-100 flex-1">
-                Driving partnerships and opportunities between Italy and Ghana.
-              </p>
 
               {/* CTA Button */}
               <div className="hidden md:flex">
-                <LiquidButton 
-                  className="
+                <Button className="bg-white hover:text-white hover:bg-red-500 text-gray-700 transition-colors duration-200">
+                  Join Us Today
+                </Button>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden p-2"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? (
+                  <X className="h-6 w-6 text-white" />
+                ) : (
+                  <Menu className="h-6 w-6 text-white" />
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Navigation */}
+            {isMenuOpen && (
+              <div className="md:hidden bg-black/80 backdrop-blur-md border-t border-white/20">
+                <nav className="flex flex-col space-y-4 px-4 py-6">
+                  {navigationItems.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={`text-base font-medium transition-colors duration-200 ${
+                        isActive(item.href)
+                          ? "text-white"
+                          : "text-gray-200 hover:text-white"
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                  <Button className="bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 text-white transition-all duration-200 mt-4">
+                    Join Us Today
+                  </Button>
+                </nav>
+              </div>
+            )}
+          </div>
+        </header>
+
+        {/* Content */}
+        <div className="absolute bottom-16 left-0 right-0 ">
+          <div className="container max-w-8xl mx-auto px-4">
+            <motion.div
+              className="max-w-8xl mx-auto"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold text-gray-100 leading-tight mb-6 justify-between">
+                Building Bridges Between
+                <br /> Italy and Ghana
+              </h1>
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
+                <p className="text-xl md:text-2xl text-gray-100 flex-1">
+                  Driving partnerships and opportunities between Italy and
+                  Ghana.
+                </p>
+
+                {/* CTA Button */}
+                <div className="hidden md:flex">
+                  <LiquidButton
+                    className="
                     text-white 
                     text-lg 
                     font-light
-                    [&>div:first-child]:shadow-[0_0_6px_rgba(0,0,0,0.5),0_2px_6px_rgba(0,0,0,0.5),inset_3px_3px_0.5px_-3px_rgba(156,163,175,0.9),inset_-3px_-3px_0.5px_-3px_rgba(156,163,175,0.85),inset_1px_1px_1px_-0.5px_rgba(156,163,175,0.6),inset_-1px_-1px_1px_-0.5px_rgba(156,163,175,0.6),inset_0_0_6px_6px_rgba(156,163,175,0.12),inset_0_0_2px_2px_rgba(156,163,175,0.06),0_0_12px_rgba(255,255,255,0.15)]">
-                  Join Us Today
-                </LiquidButton>
-              </div>
+                    [&>div:first-child]:shadow-[0_0_6px_rgba(0,0,0,0.5),0_2px_6px_rgba(0,0,0,0.5),inset_3px_3px_0.5px_-3px_rgba(156,163,175,0.9),inset_-3px_-3px_0.5px_-3px_rgba(156,163,175,0.85),inset_1px_1px_1px_-0.5px_rgba(156,163,175,0.6),inset_-1px_-1px_1px_-0.5px_rgba(156,163,175,0.6),inset_0_0_6px_6px_rgba(156,163,175,0.12),inset_0_0_2px_2px_rgba(156,163,175,0.06),0_0_12px_rgba(255,255,255,0.15)]"
+                  >
+                    Join Us Today
+                  </LiquidButton>
+                </div>
 
-              {/* <motion.button
+                {/* <motion.button
                 className="inline-flex items-center gap-3 bg-white text-red-600 pl-[10px] pr-[15px] py-3 rounded-full font-semibold text-base shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden"
                 whileHover="hover"
                 initial="initial"
@@ -242,8 +263,8 @@ export function HeroSection2() {
                   hover: {}
                 }}
               > */}
-              {/* Sliding circular icon */}
-              {/* <motion.div 
+                {/* Sliding circular icon */}
+                {/* <motion.div 
                   className="w-[35px] h-[35px] bg-red-500 rounded-full flex items-center justify-center z-10 relative"
                   variants={{
                     initial: { x: 0 },
@@ -256,8 +277,8 @@ export function HeroSection2() {
                   </svg>
                 </motion.div> */}
 
-              {/* Text that fades out and reappears on the right */}
-              {/* <div className="relative flex-1">
+                {/* Text that fades out and reappears on the right */}
+                {/* <div className="relative flex-1">
                     <motion.span
                        className="inline-block whitespace-nowrap"
                        variants={{
@@ -291,11 +312,11 @@ export function HeroSection2() {
                          Join Us Today
                        </motion.span>
                   </div> */}
-              {/* </motion.button> */}
-            </div>
-          </motion.div>
+                {/* </motion.button> */}
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
       </section>
     </>
   );
