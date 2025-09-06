@@ -16,18 +16,18 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
   isLast = false,
 }) => {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 group cursor-pointer transition-all duration-300 hover:transform hover:translate-x-2">
       <div className="flex flex-col items-center">
-        <div className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center">
+        <div className="w-10 h-10 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-red-600 group-hover:text-white group-hover:scale-110">
           {icon}
         </div>
-        {!isLast && <div className="w-px h-16 bg-gray-300 mt-2"></div>}
+        {!isLast && <div className="w-px h-16 bg-gray-300 mt-2 transition-colors duration-300 group-hover:bg-red-300"></div>}
       </div>
       <div className="pb-8">
-        <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight mb-2">
+        <h3 className="text-gray-700 font-semibold text-xl md:text-2xl md:leading-tight mb-2 transition-colors duration-300 group-hover:text-red-600">
           {title}
         </h3>
-        <p className="text-sm lg:text-base text-neutral-600">{description}</p>
+        <p className="text-sm lg:text-base text-neutral-600 transition-colors duration-300 group-hover:text-gray-800">{description}</p>
       </div>
     </div>
   );
@@ -35,7 +35,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
 
 export default function FeaturesGrid2() {
   return (
-    <section className="shadow-lg rounded-3xl md:rounded-4xl bg-white">
+    <section className="shadow-md rounded-3xl md:rounded-4xl bg-white">
       {/* Approach */}
       <div className="max-w-7xl px-4 xl:px-0 py-10 lg:pt-20 lg:pb-20 mx-auto">
         {/* Title */}
@@ -67,7 +67,7 @@ export default function FeaturesGrid2() {
           {/* Timeline */}
 
           <div>
-            <span className="inline-flex items-center shadow-inner backdrop-blur-md bg-white/20 border border-white/30 rounded-full px-4 py-1 text-sm font-medium mb-4 text-gray-700">
+            <span className="inline-flex items-center  border shadow-inner border-gray-300 rounded-full px-4 py-1 text-sm font-medium mb-4 text-gray-700">
               <span className="w-2 h-2 bg-gray-700 rounded-full mr-2"></span>
               Why Join Us
             </span>
@@ -86,19 +86,19 @@ export default function FeaturesGrid2() {
             {/* End Heading */}
 
             <TimelineItem
-              icon={<Users className="w-4 h-4" />}
+              icon={<Users className="w-6 h-6" />}
               title="Network"
               description="Land your next contract or expand your clientele base during our social and business events. IBAG is strategically positioned to advance your business's network and net worth."
             />
 
             <TimelineItem
-              icon={<Handshake className="w-4 h-4" />}
+              icon={<Handshake className="w-6 h-6" />}
               title="Collaborate"
               description="We celebrate Italian culture periodically to create local awareness of Italian festivities and customs as well as to provide a sense of belonging to home-sick Italians living in Ghana."
             />
 
             <TimelineItem
-              icon={<MessagesSquare className="w-4 h-4" />}
+              icon={<MessagesSquare className="w-6 h-6" />}
               title="Support"
               description="From time to time, we bring our members together informally by hosting 'Aperitivo' sessions and dinners to build and harness stronger inter-member connections and business relations."
               isLast={true}
@@ -107,7 +107,7 @@ export default function FeaturesGrid2() {
             {/* <LiquidButton className="text-gray-900 hover:text-red-500 h-10 w-30 hover:scale-100 hover:[&>div:first-child]:shadow-[inset_3px_3px_0.5px_-3px_rgba(239,68,68,0.9),inset_-3px_-3px_0.5px_-3px_rgba(239,68,68,0.85),inset_1px_1px_1px_-0.5px_rgba(239,68,68,0.6),inset_-1px_-1px_1px_-0.5px_rgba(239,68,68,0.6),inset_0_0_6px_6px_rgba(239,68,68,0.12),inset_0_0_2px_2px_rgba(239,68,68,0.06)] transition-all duration-300">
               Join Us Today
             </LiquidButton> */}
-            <Button className="bg-red-600 hover:bg-red-700 text-white h-10 w-30">
+            <Button className="bg-gray-800 hover:bg-red-600 text-white h-10 w-30">
               Join Us Today
             </Button>
           </div>
