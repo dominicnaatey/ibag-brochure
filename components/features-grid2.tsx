@@ -37,7 +37,7 @@ export default function FeaturesGrid2() {
   return (
     <section className="shadow-md rounded-3xl md:rounded-4xl bg-white">
       {/* Approach */}
-      <div className="max-w-7xl px-4 xl:px-0 py-10 lg:pt-20 lg:pb-20 mx-auto">
+      <div className="max-w-7xl px-4 xl:px-0 py-10 lg:py-20 mx-auto">
         {/* Title */}
         {/* <div className="mb-10 lg:mb-14">
           <h2 className="text-4xl text-center md:text-5xl w-3xl mx-auto font-extrabold text-gray-50 leading-tight">
