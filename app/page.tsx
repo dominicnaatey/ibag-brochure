@@ -11,6 +11,7 @@ import { WelcomeSection } from "@/components/welcome-section";
 import { FeaturesGrid } from "@/components/features-grid";
 import FeaturesGrid2 from "@/components/features-grid2";
 import { ActivitiesSection } from "@/components/activities-section";
+import { ActivitiesSection2 } from "@/components/activites-section2";
 import FeaturedBlog from "@/components/featured-blog";
 
 import { motion } from "framer-motion";
@@ -58,7 +59,7 @@ export default function HomePage() {
         {/* IBAG Activities Section */}
         <section className="">
           <div className=" mx-auto px-4">
-            <ActivitiesSection />
+            <ActivitiesSection2 />
           </div>
         </section>
 
