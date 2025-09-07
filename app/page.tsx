@@ -11,6 +11,8 @@ import { WelcomeSection } from "@/components/welcome-section";
 import { FeaturesGrid } from "@/components/features-grid";
 import FeaturesGrid2 from "@/components/features-grid2";
 import { ActivitiesSection } from "@/components/activities-section";
+import FeaturedBlog from "@/components/featured-blog";
+
 import { motion } from "framer-motion";
 
 export default function HomePage() {
@@ -57,6 +59,13 @@ export default function HomePage() {
         <section className="">
           <div className=" mx-auto px-4">
             <ActivitiesSection />
+          </div>
+        </section>
+
+        {/* Featured Blog Section */}
+        <section className="">
+          <div className=" mx-auto px-4">
+            <FeaturedBlog />
           </div>
         </section>
         
