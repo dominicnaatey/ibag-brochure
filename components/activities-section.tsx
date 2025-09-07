@@ -4,7 +4,7 @@ import {MicVocal, BriefcaseBusiness, Presentation, Drama, Wine, MessageCircle, A
 
 export function ActivitiesSection() {
   return (
-    <section className="py-20 rounded-4xl">
+    <section className="pt-20 rounded-4xl">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         <div className="text-center mb-12">
           <span className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1 text-sm font-medium mb-4 text-gray-600">
