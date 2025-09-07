@@ -47,7 +47,7 @@ export function HeroSection2() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
           isScrolled
-            ? "translate-y-0 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b shadow-sm"
+            ? "translate-y-0 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b-gray-50 shadow-sm shadow-blur-md"
             : "-translate-y-full bg-transparent"
         }`}
       >
@@ -166,7 +166,7 @@ export function HeroSection2() {
                     className={`text-base transition-colors duration-200 ${
                       isActive(item.href)
                         ? "text-red-500 font-medium"
-                        : "text-gray-50 hover:text-red-500 font-light"
+                        : "text-white hover:text-red-500 font-light"
                     }`}
                   >
                     {item.name}
