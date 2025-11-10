@@ -51,7 +51,7 @@ export default function HomePage() {
 
         {/* Features Grid */}
         <section>
-          <div className="cmx-auto px-8">
+          <div className="cmx-auto px-4">
             <FeaturesGrid2 />
           </div>
         </section>
@@ -59,7 +59,7 @@ export default function HomePage() {
         {/* IBAG Activities Section */}
         <section className="">
           <div className=" mx-auto px-4">
-            <ActivitiesSection2 />
+            <ActivitiesSection />
           </div>
         </section>
 
