@@ -4,6 +4,7 @@ import { DM_Sans } from "next/font/google"
 import { AuthProvider } from "@/contexts/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PWAInstall } from '@/components/pwa-install'
+import { DevSwUnregister } from '@/components/sw-unregister'
 import "./globals.css"
 
 const dmSans = DM_Sans({
@@ -76,6 +77,7 @@ export default function RootLayout({
       <body className="font-sans antialiased" suppressHydrationWarning>
         <AuthProvider>
           <ThemeProvider>
+            <DevSwUnregister />
             {children}
             <PWAInstall />
           </ThemeProvider>
