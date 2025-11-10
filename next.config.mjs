@@ -30,7 +30,8 @@ const withPWAConfig = withPWA({
       }
     },
     {
-      urlPattern: /\.(?:eot|otf|ttc|ttf|woff|woff2|font.css)$/i,
+      // Same-origin only: static font assets
+      urlPattern: ({ url }) => url.origin === self.location.origin && /\.(?:eot|otf|ttc|ttf|woff|woff2|font.css)$/i.test(url.pathname),
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'static-font-assets',
@@ -41,7 +42,8 @@ const withPWAConfig = withPWA({
       }
     },
     {
-      urlPattern: /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,
+      // Same-origin only: static image assets
+      urlPattern: ({ url }) => url.origin === self.location.origin && /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i.test(url.pathname),
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'static-image-assets',
@@ -52,24 +54,13 @@ const withPWAConfig = withPWA({
       }
     },
     {
-      urlPattern: /\/api\/.*$/i,
+      // Same-origin only: API routes
+      urlPattern: ({ url }) => url.origin === self.location.origin && url.pathname.startsWith('/api/'),
       handler: 'NetworkFirst',
       options: {
         cacheName: 'apis',
         expiration: {
           maxEntries: 16,
-          maxAgeSeconds: 24 * 60 * 60 // 24 hours
-        },
-        networkTimeoutSeconds: 10
-      }
-    },
-    {
-      urlPattern: /.*/i,
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'others',
-        expiration: {
-          maxEntries: 32,
           maxAgeSeconds: 24 * 60 * 60 // 24 hours
         },
         networkTimeoutSeconds: 10
