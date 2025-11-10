@@ -2,9 +2,8 @@ import withPWA from 'next-pwa';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // Enable Turbopack configuration to silence webpack config detection
+  turbopack: {},
   typescript: {
     ignoreBuildErrors: true,
   },
