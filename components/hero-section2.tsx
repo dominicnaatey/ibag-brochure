@@ -237,7 +237,7 @@ export function HeroSection2() {
               </h1>
              
                 <p className="text-base md:text-lg text-center text-gray-100 flex-1">
-                  Driving partnerships and opportunities between Italy and
+                  Driving partnerships and opportunities between <br/> Italy and
                   Ghana.
                 </p>
 
