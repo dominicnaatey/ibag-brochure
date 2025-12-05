@@ -8,9 +8,19 @@ import { newsService } from "@/lib/supabase-service"
 
 export default async function NewsPage() {
   // Fetch news from Supabase
-  const allNews = await newsService.getAll()
-  const featuredNews = allNews[0] // Use the most recent news as featured
-  const recentNews = allNews.slice(1, 7) // Skip first item to avoid duplication with featured
+  let allNews: any[] = []
+  let featuredNews: any = null
+  let recentNews: any[] = []
+
+  try {
+    allNews = await newsService.getAll()
+    if (allNews.length > 0) {
+      featuredNews = allNews[0] // Use the most recent news as featured
+      recentNews = allNews.slice(1, 7) // Skip first item to avoid duplication with featured
+    }
+  } catch (error) {
+    console.error("Failed to fetch news:", error)
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
