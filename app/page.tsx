@@ -37,7 +37,7 @@ export default function HomePage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="">
-          <div className=" mx-auto px-4 pt-4">
+          <div className="">
             <HeroSection2 />
           </div>
         </section>
