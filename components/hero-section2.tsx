@@ -129,7 +129,7 @@ export function HeroSection2() {
         </div>
       </header>
 
-      <section className="relative w-full h-[70vh] lg:h-[97vh] overflow-hidden rounded-4xl">
+      <section className="relative w-full h-[100vh] lg:h-[100vh] overflow-hidden">
         {/* Background Image */}
         <Image
           src="/hero2-bg.jpg"
@@ -140,7 +140,7 @@ export function HeroSection2() {
         />
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70"></div>
 
         {/* Hero Navigation Header - scrolls with hero */}
         <header className="absolute top-0 left-0 right-0 z-50 w-full bg-transparent">
@@ -231,18 +231,18 @@ export function HeroSection2() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold text-gray-100 leading-tight mb-6 justify-between">
+              <h1 className="text-[28px] md:text-5xl text-center font-bold text-gray-100 leading-tight mb-4 justify-between">
                 Building Bridges Between
                 <br /> Italy and Ghana
               </h1>
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8">
-                <p className="text-xl md:text-2xl text-gray-100 flex-1">
+             
+                <p className="text-base md:text-lg text-center text-gray-100 flex-1">
                   Driving partnerships and opportunities between Italy and
                   Ghana.
                 </p>
 
                 {/* CTA Button */}
-                <div className="hidden md:flex">
+                <div className="hidden md:flex items-center justify-center mt-6">
                   <LiquidButton
                     className="
                     text-white 
@@ -313,7 +313,6 @@ export function HeroSection2() {
                        </motion.span>
                   </div> */}
                 {/* </motion.button> */}
-              </div>
             </motion.div>
           </div>
         </div>
