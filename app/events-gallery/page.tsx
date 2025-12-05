@@ -6,11 +6,24 @@ import Link from "next/link"
 import { eventsService, galleryService } from "@/lib/supabase-service"
 
 export default async function EventsGalleryPage() {
-  const allEvents = await eventsService.getAll()
-  const upcomingEvents = allEvents.filter((event) => new Date(event.date) > new Date()).slice(0, 3)
+  let allEvents: any[] = []
+  let upcomingEvents: any[] = []
+  let pastEventsGallery: any[] = []
+  let galleryImages: any[] = []
 
-  const pastEventsGallery = await galleryService.getAll()
-  const galleryImages = pastEventsGallery.slice(0, 6)
+  try {
+    allEvents = await eventsService.getAll()
+    upcomingEvents = allEvents.filter((event) => new Date(event.date) > new Date()).slice(0, 3)
+  } catch (error) {
+    console.error("Failed to fetch events:", error)
+  }
+
+  try {
+    pastEventsGallery = await galleryService.getAll()
+    galleryImages = pastEventsGallery.slice(0, 6)
+  } catch (error) {
+    console.error("Failed to fetch gallery:", error)
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
