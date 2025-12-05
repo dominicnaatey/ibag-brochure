@@ -5,7 +5,14 @@ import { membersService } from "@/lib/supabase-service"
 
 export default async function MembersPage() {
   // Fetch members from Supabase
-  const allMembers = await membersService.getAll()
+  let allMembers: any[] = []
+  
+  try {
+    allMembers = await membersService.getAll()
+  } catch (error) {
+    console.error("Failed to fetch members:", error)
+  }
+
   const memberCategories = [
     {
       title: "Corporate Members",
